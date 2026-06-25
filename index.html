@@ -1,0 +1,818 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0d2144;--teal:#0a8a7a;--green:#3aab3a;--bg:#f0f4f8;--white:#fff;--muted:#637085;--border:#e2e8f0}
+html,body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--navy);overflow-x:hidden}
+.page{display:none;min-height:100vh}.page.on{display:block}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:9999;box-shadow:0 1px 12px rgba(13,33,68,.06)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}
+.nl{font-size:13px;font-weight:500;color:#637085;padding:7px 13px;border-radius:8px;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
+.nl:hover{background:#f1f5f9;color:#0f1c2e}.nl.on{background:rgba(10,138,122,.1);color:#0a8a7a;font-weight:600}
+.nav-links{display:flex;align-items:center;gap:4px;flex-shrink:0}
+
+.hero{background:linear-gradient(135deg,#0d2144 0%,#0b3060 45%,#083d30 100%);padding:4.5rem 2rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+.hg{position:absolute;border-radius:50%;pointer-events:none;animation:hgf 6s ease-in-out infinite}
+.hg1{width:400px;height:400px;background:radial-gradient(circle,rgba(10,138,122,.18),transparent 70%);top:-100px;left:-100px;animation-delay:0s}
+.hg2{width:350px;height:350px;background:radial-gradient(circle,rgba(58,171,58,.12),transparent 70%);bottom:-80px;right:-80px;animation-delay:-3s}
+@keyframes hgf{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-20px) scale(1.05)}}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 15px;border-radius:20px;font-size:11px;color:rgba(255,255,255,.9);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;position:relative;z-index:2;animation:sup .6s ease both}
+.pr{width:7px;height:7px;border-radius:50%;background:#5dc45d;position:relative;flex-shrink:0}
+.pr::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid #5dc45d;animation:ring 1.6s ease-out infinite}
+@keyframes ring{0%{transform:scale(1);opacity:1}100%{transform:scale(2.5);opacity:0}}
+@keyframes sup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:50px;font-weight:800;line-height:1.06;letter-spacing:-2.5px;color:#fff;margin-bottom:.9rem;position:relative;z-index:2;animation:sup .7s ease .1s both}
+.hero h1 .g{color:#5dc45d}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto 2.2rem;line-height:1.75;position:relative;z-index:2;animation:sup .7s ease .2s both}
+.ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;animation:sup .7s ease .3s both}
+.btn-w{background:#fff;color:#0d2144;border:none;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
+.btn-w:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.btn-o{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s;font-family:'Inter',sans-serif}
+.btn-o:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+
+.ticker{overflow:hidden;background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 0}
+.ti{display:flex;gap:3rem;animation:scr 28s linear infinite;width:max-content}
+.tick{font-size:12px;color:#637085;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.tick b{color:#0a8a7a;font-weight:700}
+.tsep{color:#e2e8f0;font-size:20px;line-height:1}
+@keyframes scr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-bottom:1px solid #e2e8f0}
+.sc{padding:1.4rem;text-align:center;border-right:1px solid #e2e8f0;position:relative;overflow:hidden;transition:background .25s}
+.sc:last-child{border-right:none}.sc:hover{background:#f8fcfb}
+.sc::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:linear-gradient(90deg,#0a8a7a,#3aab3a);transition:width .35s}
+.sc:hover::after{width:60%}
+.sn{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#0a8a7a,#3aab3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl{font-size:11px;color:#637085;text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+
+/* ===== MAP SECTION ===== */
+.map-sec{padding:3rem 2rem;background:#fff;border-top:1px solid #e2e8f0}
+.ey{display:inline-flex;align-items:center;gap:8px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#0a8a7a;font-weight:700;margin-bottom:7px}
+.ey::before{content:'';display:inline-block;width:14px;height:2px;background:#0a8a7a;border-radius:2px}
+.sh{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:800;color:#0d2144;letter-spacing:-1px;margin-bottom:6px}
+.sp2{font-size:13px;color:#637085;line-height:1.7;margin-bottom:1.5rem}
+.map-layout{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start}
+
+/* SVG MAP */
+.map-wrap{background:linear-gradient(160deg,#e8f4f0 0%,#dceee8 100%);border-radius:20px;border:1.5px solid #e2e8f0;overflow:hidden;position:relative;box-shadow:0 8px 40px rgba(13,33,68,.08)}
+.map-wrap svg{display:block;width:100%;height:auto}
+
+/* Zone paths - emboss hover effect */
+.z-path{cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}
+.z-path:hover{filter:drop-shadow(0 8px 20px rgba(0,0,0,.25)) brightness(1.1);transform:translateY(-3px) scale(1.015)}
+.z-path.sel{filter:drop-shadow(0 10px 24px rgba(10,138,122,.4)) brightness(1.12);transform:translateY(-4px) scale(1.018)}
+
+/* Zone label group */
+.z-label-g{pointer-events:none;transition:transform .3s}
+
+/* Park dots on SVG */
+.p-dot{cursor:pointer;transition:all .2s}
+.p-dot:hover .p-circle{r:7;opacity:1}
+.p-dot.sel .p-circle{stroke-width:3;opacity:1}
+.p-dot:hover .p-label-bg{opacity:1}
+.p-dot:hover .p-label-txt{opacity:1}
+
+/* Legend */
+.map-leg-wrap{position:absolute;bottom:16px;left:16px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid #e2e8f0;border-radius:10px;padding:.7rem 1rem;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.lr{display:flex;align-items:center;gap:7px;font-size:11px;color:#637085;margin-bottom:4px;font-family:'Inter',sans-serif}
+.lr:last-child{margin-bottom:0}
+.ld{width:10px;height:10px;border-radius:50%}
+
+/* RIGHT PANEL */
+.map-panel{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;position:sticky;top:80px;max-height:500px;overflow-y:auto;box-shadow:0 4px 20px rgba(13,33,68,.06)}
+.mp-hint{padding:2.5rem 1.5rem;text-align:center;color:#637085;font-size:13px;line-height:1.65}
+.mp-ico{font-size:34px;margin-bottom:10px}
+.mp-ht{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0d2144;font-size:14px;margin-bottom:5px}
+.mp-header{padding:.9rem 1.2rem;border-bottom:1px solid #e2e8f0;background:linear-gradient(135deg,#f8fafc,#f0f9f7);position:sticky;top:0;z-index:5}
+.mp-zn{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#0d2144}
+.mp-zs{font-size:11px;color:#637085;margin-top:2px}
+.mp-content{display:none}
+.pk-card{padding:.85rem 1.1rem;border-bottom:1px solid #e2e8f0;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:11px}
+.pk-card:last-child{border-bottom:none}
+.pk-card:hover{background:#f8fcfb;transform:translateX(2px)}
+.pk-card.sel{background:rgba(10,138,122,.06);border-left:3px solid #0a8a7a}
+.pk-ring{width:42px;height:42px;flex-shrink:0;position:relative}
+.pk-rn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700}
+.pk-info{flex:1;min-width:0}
+.pk-name{font-size:13px;font-weight:700;color:#0d2144;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pk-meta{font-size:11px;color:#637085;margin-top:2px;display:flex;align-items:center;gap:5px}
+.cr-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* PARK DETAIL */
+.pdc{display:none;margin-top:20px;border:1px solid rgba(10,138,122,.2);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 8px 40px rgba(10,138,122,.1);animation:pdc-in .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pdc-in{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.pdc.show{display:block}
+.pdc-head{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;background:linear-gradient(135deg,#0d2144,#0a3a6a);border-bottom:1px solid rgba(10,138,122,.3)}
+.pdc-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px;min-width:0}
+.pdc-sco{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:3px 10px;border-radius:8px;font-size:13px;font-weight:800;flex-shrink:0}
+.pdc-x{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);width:30px;height:30px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;flex-shrink:0}
+.pdc-x:hover{background:rgba(255,255,255,.2);color:#fff}
+.pdc-body{padding:1.3rem 1.5rem}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.2rem}
+.kpi{background:linear-gradient(135deg,#f8fafc,#f0f9f7);border:1px solid #e2e8f0;border-radius:12px;padding:.8rem;text-align:center;transition:transform .2s}
+.kpi:hover{transform:translateY(-2px)}
+.kn{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;color:#0a8a7a}
+.kl{font-size:10px;color:#637085;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;line-height:1.3}
+.cat-section{margin-bottom:1.1rem}
+.cat-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#0a8a7a;margin-bottom:.7rem}
+.cr{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.cn{font-size:11px;color:#637085;width:130px;flex-shrink:0;text-align:right}
+.ct{flex:1;background:#f1f5f9;border-radius:5px;height:12px;overflow:hidden}
+.cf{height:100%;border-radius:5px;transform-origin:left;animation:bf .8s cubic-bezier(.34,1.56,.64,1) var(--d,0s) both}
+@keyframes bf{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.cv{font-size:11px;font-weight:800;width:28px;flex-shrink:0;font-family:'Space Grotesk',sans-serif}
+.tbox{background:linear-gradient(135deg,#f8fafc,#f0f9f7);border:1px solid #e2e8f0;border-radius:12px;padding:1rem}
+.tt{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#0a8a7a;margin-bottom:6px}
+.tb{font-size:12px;color:#637085;line-height:1.75}
+
+/* about/projects */
+.sec{padding:3rem 2rem}
+.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:1.5rem}
+.ac{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.3rem;transition:all .3s;position:relative;overflow:hidden}
+.ac::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#0a8a7a,#3aab3a);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.ac:hover{border-color:rgba(10,138,122,.3);transform:translateY(-4px);box-shadow:0 8px 30px rgba(10,138,122,.1)}.ac:hover::after{transform:scaleX(1)}
+.ai{font-size:24px;margin-bottom:10px}.at{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#0d2144;margin-bottom:4px}.ad{font-size:12px;color:#637085;line-height:1.65}
+
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:1.5rem}
+.proj-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s}
+.proj-card:not(.dim):hover{border-color:#0a8a7a;box-shadow:0 12px 40px rgba(10,138,122,.12);transform:translateY(-4px)}
+.proj-card.dim{opacity:.5;cursor:default;pointer-events:none}
+.pcs{height:4px;background:linear-gradient(90deg,#0d2144,#0a8a7a,#3aab3a);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.proj-card:hover .pcs{transform:scaleX(1)}
+.pch{padding:1.2rem 1.2rem .5rem;display:flex;justify-content:space-between;align-items:flex-start}
+.pci{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.ig{background:rgba(58,171,58,.1)}.id{background:#f1f5f9}
+.tag{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:4px 10px;border-radius:6px}
+.tl{background:rgba(58,171,58,.12);color:#3aab3a;border:1px solid rgba(58,171,58,.25)}
+.ts2{background:#f1f5f9;color:#94a3b8;border:1px solid #e2e8f0}
+.pcb{padding:0 1.2rem 1.2rem}
+.pct{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#0d2144;margin-bottom:5px}
+.pcd{font-size:12px;color:#637085;line-height:1.65;margin-bottom:.9rem}
+.pcm{display:flex;gap:8px;padding-top:.8rem;border-top:1px solid #e2e8f0;flex-wrap:wrap}
+.pm{background:#f1f5f9;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:500;color:#637085}
+
+/* contact / footer */
+.cbar{background:linear-gradient(135deg,#0d2144,#0a3a6a);padding:2.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.ct-t{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+.ct-s{font-size:13px;color:rgba(255,255,255,.5)}
+.ct-links{display:flex;gap:12px;flex-wrap:wrap}
+.cb{display:flex;align-items:center;gap:8px;padding:11px 20px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .25s;font-family:'Inter',sans-serif}
+.cb-ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;border:none}
+.cb-ig:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(253,29,29,.3)}
+.cb-em{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.cb-em:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.footer{background:#06101e;color:rgba(255,255,255,.4);padding:1.4rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px}
+.fl{display:flex;align-items:center;gap:8px;color:#fff;font-weight:600;font-size:13px}
+.fr{display:flex;gap:14px}.fr a{color:rgba(255,255,255,.4);text-decoration:none;cursor:pointer;transition:color .2s}.fr a:hover{color:#5dc45d}
+
+/* PLAN page */
+.rp-hero{background:linear-gradient(135deg,#0d2144,#0b3060);padding:3rem 2rem;color:#fff;position:relative;overflow:hidden}
+.rp-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,rgba(10,138,122,.15),transparent 60%);pointer-events:none}
+.rp-hero h1{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1.5px;margin-bottom:8px;position:relative}
+.rp-hero p{font-size:14px;color:rgba(255,255,255,.6);max-width:500px;line-height:1.75;position:relative}
+.rp-body{padding:2rem}
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:2rem}
+.mc{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;text-align:center;transition:all .25s}
+.mc:hover{transform:translateY(-2px);border-color:rgba(10,138,122,.3)}
+.mn{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;background:linear-gradient(135deg,#0a8a7a,#3aab3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ml{font-size:10px;color:#637085;text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
+.phase{display:flex;gap:13px;padding:13px 15px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;margin-bottom:10px;transition:all .25s;align-items:flex-start}
+.phase:hover{border-color:rgba(10,138,122,.3);transform:translateX(2px)}
+.ph-n{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;font-family:'Space Grotesk',sans-serif}
+.ph-done .ph-n{background:rgba(58,171,58,.12);color:#3aab3a}
+.ph-active .ph-n{background:#0a8a7a;color:#fff}
+.ph-up .ph-n{background:#f1f5f9;color:#637085}
+.ph-t{font-size:13px;font-weight:700;color:#0d2144;margin-bottom:3px}
+.ph-d{font-size:12px;color:#637085;line-height:1.6}
+.pb{font-size:10px;font-weight:700;padding:4px 10px;border-radius:7px;flex-shrink:0;align-self:center}
+.pb-done{background:rgba(58,171,58,.1);color:#3aab3a}
+.pb-act{background:rgba(10,138,122,.1);color:#0a8a7a}
+.pb-up{background:#f1f5f9;color:#637085}
+
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.rv.vs{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo" onclick="showPage('home')">
+    <!-- Actual CiviqPulse logo recreation -->
+    <svg height="40" viewBox="0 0 46 50" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <!-- Pin outer shape -->
+      <path d="M23 2C14.7 2 8 8.7 8 17c0 9.5 15 31 15 31S38 26.5 38 17C38 8.7 31.3 2 23 2z" fill="#0d2144"/>
+      <!-- White inner circle -->
+      <circle cx="23" cy="17" r="12" fill="white"/>
+      <!-- Tree (green circle + trunk) -->
+      <circle cx="19" cy="15.5" r="5.5" fill="#3aab3a"/>
+      <rect x="18.2" y="19.5" width="1.6" height="3" rx=".4" fill="#5a3820"/>
+      <!-- Bar chart -->
+      <rect x="25.5" y="19" width="2.5" height="3.5" rx=".5" fill="#0a8a7a"/>
+      <rect x="28.5" y="16" width="2.5" height="6.5" rx=".5" fill="#0a8a7a"/>
+      <rect x="31.5" y="13" width="2.5" height="9.5" rx=".5" fill="#3aab3a"/>
+      <!-- Heartbeat line over top -->
+      <polyline points="11,16 14.5,16 16,13.5 17.5,20 19,10 20.5,16.5 22,14 25.5,14" stroke="#0a8a7a" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="25.5" cy="14" r="1.2" fill="#0a8a7a"/>
+      <!-- Drop shadow/base -->
+      <ellipse cx="23" cy="34" rx="5" ry="1.5" fill="rgba(10,138,122,.2)"/>
+    </svg>
+    <div style="flex-shrink:0">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:800;letter-spacing:-.4px;line-height:1;color:#0d2144">Civiq<span style="color:#0a8a7a">Pulse</span></div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <button class="nl on" id="nl-home" onclick="showPage('home')">Home</button>
+    <button class="nl" id="nl-plan" onclick="showPage('plan')">Research Plan</button>
+    <button class="nl" id="nl-about" onclick="showPage('about')">About</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page on" id="page-home">
+<div class="hero">
+  <div class="hg hg1"></div><div class="hg hg2"></div>
+  <div class="hero-badge"><div class="pr"></div>Active Research — 2025–2026</div>
+  <h1>Turning <span class="g">community data</span><br>into real change.</h1>
+  <p class="hero-sub">CiviqPulse is a youth-led analytics initiative identifying what is broken in our city and backing it up with data.</p>
+  <div class="ctas">
+    <button class="btn-w" onclick="document.getElementById('map-sec').scrollIntoView({behavior:'smooth'})">Explore Park Data</button>
+    <button class="btn-o" onclick="showPage('plan')">View Research Plan</button>
+  </div>
+</div>
+
+<div class="ticker">
+  <div class="ti">
+    <span class="tick"><b>11</b> parks surveyed</span><span class="tsep">·</span>
+    <span class="tick"><b>8</b> score categories · 12.5 pts each</span><span class="tsep">·</span>
+    <span class="tick">Litter · Bins · Grass · Benches · Playground · Graffiti · Washrooms</span><span class="tsep">·</span>
+    <span class="tick"><b>Apr–May 2026</b> field visits</span><span class="tsep">·</span>
+    <span class="tick"><b>Phase 5</b> Generating insights</span><span class="tsep">·</span>
+    <span class="tick"><b>Brampton Parks Dept</b> outreach planned</span><span class="tsep">·</span>
+    <span class="tick"><b>11</b> parks surveyed</span><span class="tsep">·</span>
+    <span class="tick"><b>8</b> score categories · 12.5 pts each</span><span class="tsep">·</span>
+    <span class="tick">Litter · Bins · Grass · Benches · Playground · Graffiti · Washrooms</span><span class="tsep">·</span>
+    <span class="tick"><b>Apr–May 2026</b> field visits</span><span class="tsep">·</span>
+    <span class="tick"><b>Phase 5</b> Generating insights</span><span class="tsep">·</span>
+    <span class="tick"><b>Brampton Parks Dept</b> outreach planned</span><span class="tsep">·</span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="sc"><div class="sn">11</div><div class="sl">Parks Surveyed</div></div>
+  <div class="sc"><div class="sn">8</div><div class="sl">Score Categories</div></div>
+  <div class="sc"><div class="sn">7.9</div><div class="sl">Avg. Score</div></div>
+  <div class="sc"><div class="sn">5</div><div class="sl">Neighbourhoods</div></div>
+</div>
+
+<!-- MAP -->
+<div class="map-sec rv" id="map-sec">
+  <div class="ey">Park Cleanliness Map</div>
+  <div class="sh">Brampton — postal code zones</div>
+  <p class="sp2">Hover a zone to see it pop · Click to explore parks · Click a park pin for full breakdown</p>
+
+  <div class="map-layout">
+    <div class="map-wrap" style="position:relative">
+      <svg id="bmap" viewBox="0 0 500 520" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto">
+        <defs>
+          <filter id="emboss">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+            <feOffset dx="0" dy="4" result="shadow"/>
+            <feFlood flood-color="rgba(0,0,0,0.25)" result="color"/>
+            <feComposite in="color" in2="shadow" operator="in" result="shadow2"/>
+            <feMerge><feMergeNode in="shadow2"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="emboss-hover">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+            <feOffset dx="0" dy="8" result="shadow"/>
+            <feFlood flood-color="rgba(0,0,0,0.35)" result="color"/>
+            <feComposite in="color" in2="shadow" operator="in" result="shadow2"/>
+            <feMerge><feMergeNode in="shadow2"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="g-l7a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a9e80"/><stop offset="100%" stop-color="#0d7060"/></linearGradient>
+          <linearGradient id="g-l6p" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2aab50"/><stop offset="100%" stop-color="#1a8038"/></linearGradient>
+          <linearGradient id="g-l6r" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1d8c7a"/><stop offset="100%" stop-color="#0f6355"/></linearGradient>
+          <linearGradient id="g-l6s" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3a9e60"/><stop offset="100%" stop-color="#286e44"/></linearGradient>
+          <linearGradient id="g-l6t" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0d7a60"/><stop offset="100%" stop-color="#085545"/></linearGradient>
+          <linearGradient id="g-l6v" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22b880"/><stop offset="100%" stop-color="#108858"/></linearGradient>
+          <linearGradient id="g-l6w" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#158870"/><stop offset="100%" stop-color="#0a5e50"/></linearGradient>
+          <linearGradient id="g-l6x" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0e9870"/><stop offset="100%" stop-color="#086850"/></linearGradient>
+          <linearGradient id="g-l6y" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#268a5a"/><stop offset="100%" stop-color="#1a6040"/></linearGradient>
+          <linearGradient id="g-l6z" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a7060"/><stop offset="100%" stop-color="#104848"/></linearGradient>
+        </defs>
+
+        <!-- Background -->
+        <rect width="500" height="520" fill="#c8ddd6" rx="0"/>
+        <!-- Subtle grid -->
+        <line x1="0" y1="260" x2="500" y2="260" stroke="rgba(255,255,255,.25)" stroke-width=".5"/>
+        <line x1="250" y1="0" x2="250" y2="520" stroke="rgba(255,255,255,.25)" stroke-width=".5"/>
+
+        <!-- 
+          BRAMPTON POSTAL ZONES - Approximate shapes based on real geography
+          L7A: NW Brampton (Mount Pleasant, Northwest Brampton)
+          L6P: North Brampton (Sandalwood)
+          L6R: NW (Heart Lake, Springdale)  
+          L6S: NE Brampton (Bramalea North)
+          L6T: East/Bramalea
+          L6V: East Central
+          L6W: Downtown / South
+          L6X: West Central (Fletchers Creek)
+          L6Y: SW (Brampton South)
+          L6Z: SE (Airport Road area)
+        -->
+
+        <!-- L7A - NW, Mount Pleasant -->
+        <path id="z-L7A" class="z-path" d="M20 20 L170 20 L185 90 L165 160 L80 175 L20 160 Z"
+          fill="url(#g-l7a)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L7A')" filter="url(#emboss)"/>
+        <text x="95" y="88" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="16" fill="white" opacity=".95" pointer-events="none">L7A</text>
+        <text x="95" y="105" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">Northwest Brampton</text>
+        <text x="95" y="118" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.6)" pointer-events="none">Mount Pleasant</text>
+
+        <!-- L6R - NW, Springdale / Heart Lake -->
+        <path id="z-L6R" class="z-path" d="M170 20 L260 20 L265 95 L185 90 Z"
+          fill="url(#g-l6r)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6R')" filter="url(#emboss)"/>
+        <text x="212" y="56" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="13" fill="white" opacity=".95" pointer-events="none">L6R</text>
+        <text x="212" y="70" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.65)" pointer-events="none">Springdale</text>
+
+        <!-- L6P - North, Sandalwood -->
+        <path id="z-L6P" class="z-path" d="M260 20 L390 20 L395 100 L310 105 L265 95 Z"
+          fill="url(#g-l6p)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6P')" filter="url(#emboss)"/>
+        <text x="325" y="60" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="14" fill="white" opacity=".95" pointer-events="none">L6P</text>
+        <text x="325" y="75" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">North Brampton</text>
+        <text x="325" y="87" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.6)" pointer-events="none">Sandalwood</text>
+
+        <!-- L6S - NE, Bramalea North -->
+        <path id="z-L6S" class="z-path" d="M390 20 L480 20 L480 140 L400 145 L395 100 Z"
+          fill="url(#g-l6s)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6S')" filter="url(#emboss)"/>
+        <text x="437" y="82" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="13" fill="white" opacity=".95" pointer-events="none">L6S</text>
+        <text x="437" y="96" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.65)" pointer-events="none">Bramalea N.</text>
+
+        <!-- L6X - West Central, Fletchers Creek -->
+        <path id="z-L6X" class="z-path" d="M20 160 L80 175 L165 160 L170 250 L90 270 L20 255 Z"
+          fill="url(#g-l6x)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6X')" filter="url(#emboss)"/>
+        <text x="93" y="213" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="14" fill="white" opacity=".95" pointer-events="none">L6X</text>
+        <text x="93" y="229" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">West Central</text>
+        <text x="93" y="241" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.6)" pointer-events="none">Fletchers Creek</text>
+
+        <!-- Central zone L6V (east, Brampton East) -->
+        <path id="z-L6V" class="z-path" d="M265 95 L310 105 L395 100 L400 145 L420 230 L320 245 L235 235 L240 160 Z"
+          fill="url(#g-l6v)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6V')" filter="url(#emboss)"/>
+        <text x="332" y="170" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="15" fill="white" opacity=".95" pointer-events="none">L6V</text>
+        <text x="332" y="187" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">Central Brampton</text>
+        <text x="332" y="199" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.6)" pointer-events="none">Brampton East</text>
+
+        <!-- L6T - Bramalea East -->
+        <path id="z-L6T" class="z-path" d="M400 145 L480 140 L480 260 L420 265 L420 230 Z"
+          fill="url(#g-l6t)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6T')" filter="url(#emboss)"/>
+        <text x="450" y="198" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="13" fill="white" opacity=".95" pointer-events="none">L6T</text>
+        <text x="450" y="212" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.65)" pointer-events="none">Bramalea E.</text>
+
+        <!-- L6W - Downtown / South Central -->
+        <path id="z-L6W" class="z-path" d="M170 250 L235 235 L240 160 L185 90 L165 160 Z"
+          fill="url(#g-l6w)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6W')" filter="url(#emboss)"/>
+        <text x="206" y="185" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="13" fill="white" opacity=".95" pointer-events="none">L6W</text>
+        <text x="206" y="199" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.65)" pointer-events="none">Downtown</text>
+
+        <!-- L6Y - SW -->
+        <path id="z-L6Y" class="z-path" d="M20 255 L90 270 L170 250 L180 340 L100 365 L20 355 Z"
+          fill="url(#g-l6y)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6Y')" filter="url(#emboss)"/>
+        <text x="98" y="307" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="14" fill="white" opacity=".95" pointer-events="none">L6Y</text>
+        <text x="98" y="323" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">Brampton South</text>
+
+        <!-- L6Z - SE (Airport Rd area) -->
+        <path id="z-L6Z" class="z-path" d="M235 235 L320 245 L420 230 L420 265 L480 260 L480 380 L355 400 L230 380 L235 310 Z"
+          fill="url(#g-l6z)" stroke="white" stroke-width="2" stroke-linejoin="round"
+          onclick="selectZone('L6Z')" filter="url(#emboss)"/>
+        <text x="355" y="310" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="14" fill="white" opacity=".95" pointer-events="none">L6Z</text>
+        <text x="355" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">Southeast</text>
+        <text x="355" y="339" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.6)" pointer-events="none">Airport Road</text>
+
+        <!-- Bottom strip -->
+        <path id="z-BOT" class="z-path" d="M20 355 L100 365 L180 340 L230 380 L355 400 L480 380 L480 500 L20 500 Z"
+          fill="#0a7060" stroke="white" stroke-width="2" stroke-linejoin="round" opacity=".6"/>
+
+        <!-- Park pins -->
+        <!-- L6X zone: Andrew McCandless Park (450 Elbern Markell Dr) -->
+        <g class="p-dot" id="pd-Andrew" onclick="selectPark('Andrew McCandless Park')">
+          <circle class="p-circle" cx="75" cy="202" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
+          <circle cx="75" cy="202" r="2.5" fill="#f59e0b"/>
+          <rect class="p-label-bg" x="82" y="194" width="130" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="147" y="205" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Andrew McCandless (6.9)</text>
+        </g>
+
+        <!-- L7A: Tillacountry Park (150 Robert Parkinson Dr) -->
+        <g class="p-dot" id="pd-Tillacountry" onclick="selectPark('Tillacountry Park')">
+          <circle class="p-circle" cx="88" cy="85" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
+          <circle cx="88" cy="85" r="2.5" fill="#3aab3a"/>
+          <rect class="p-label-bg" x="96" y="77" width="120" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="156" y="88" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Tillacountry (7.8)</text>
+        </g>
+
+        <!-- L7A: Moody Family Park (40 Robert Parkinson Dr) -->
+        <g class="p-dot" id="pd-Moody" onclick="selectPark('Moody Family Park')">
+          <circle class="p-circle" cx="122" cy="72" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
+          <circle cx="122" cy="72" r="2.5" fill="#3aab3a"/>
+          <rect class="p-label-bg" x="130" y="64" width="110" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="185" y="75" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Moody Family (8.0)</text>
+        </g>
+
+        <!-- L7A: Lola Park (Brampton ON L7A 0A8) -->
+        <g class="p-dot" id="pd-Lola" onclick="selectPark('Lola Park')">
+          <circle class="p-circle" cx="55" cy="120" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
+          <circle cx="55" cy="120" r="2.5" fill="#f59e0b"/>
+          <rect class="p-label-bg" x="63" y="112" width="85" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="105" y="123" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Lola Park (7.7)</text>
+        </g>
+
+        <!-- L7A: Angus Morrison Park (55 Aylesbury Dr) -->
+        <g class="p-dot" id="pd-Angus" onclick="selectPark('Angus Morrison Park')">
+          <circle class="p-circle" cx="148" cy="110" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
+          <circle cx="148" cy="110" r="2.5" fill="#f59e0b"/>
+          <rect class="p-label-bg" x="156" y="102" width="120" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="216" y="113" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Angus Morrison (7.8)</text>
+        </g>
+
+        <!-- L6P: Andrew McCandless Park NOTE - actually in L6X based on search (Elbern Markell Dr L6X) -->
+        <!-- L6P: Ahmadiyya Park (340 Remembrance Rd) -->
+        <g class="p-dot" id="pd-Ahmadiyya" onclick="selectPark('Ahmadiyya Park')">
+          <circle class="p-circle" cx="305" cy="60" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
+          <circle cx="305" cy="60" r="2.5" fill="#3aab3a"/>
+          <rect class="p-label-bg" x="313" y="52" width="115" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="370" y="63" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Ahmadiyya (8.0)</text>
+        </g>
+
+        <!-- L6V: Creditview Sandalwood Park (10510 Creditview Rd) -->
+        <g class="p-dot" id="pd-Creditview" onclick="selectPark('Creditview Sandalwood Park')">
+          <circle class="p-circle" cx="278" cy="138" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
+          <circle cx="278" cy="138" r="2.5" fill="#3aab3a"/>
+          <rect class="p-label-bg" x="200" y="130" width="140" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="270" y="141" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Creditview Sandalwood (8.3)</text>
+        </g>
+
+        <!-- L6X: Worthington Park (75-89 Worthington Ave) -->
+        <g class="p-dot" id="pd-Worthington" onclick="selectPark('Worthington Park')">
+          <circle class="p-circle" cx="108" cy="230" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
+          <circle cx="108" cy="230" r="2.5" fill="#f59e0b"/>
+          <rect class="p-label-bg" x="116" y="222" width="118" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="175" y="233" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Worthington (7.3)</text>
+        </g>
+
+        <!-- L6V: Burnt Elm Park (45 Burnt Elm Dr) -->
+        <g class="p-dot" id="pd-BurntElm" onclick="selectPark('Burnt Elm Park')">
+          <circle class="p-circle" cx="375" cy="185" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
+          <circle cx="375" cy="185" r="2.5" fill="#3aab3a"/>
+          <rect class="p-label-bg" x="295" y="177" width="112" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="351" y="188" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Burnt Elm (8.0)</text>
+        </g>
+
+        <!-- L7A: Fiddlers Parkette (13 Fiddlers Green Dr) -->
+        <g class="p-dot" id="pd-Fiddlers" onclick="selectPark('Fiddlers Parkette')">
+          <circle class="p-circle" cx="152" cy="140" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
+          <circle cx="152" cy="140" r="2.5" fill="#f59e0b"/>
+          <rect class="p-label-bg" x="160" y="132" width="112" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="216" y="143" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Fiddlers Parkette (7.8)</text>
+        </g>
+
+        <!-- L6V: Trincomalee Park (60 Iguana Trail) -->
+        <g class="p-dot" id="pd-Trincomalee" onclick="selectPark('Trincomalee Park')">
+          <circle class="p-circle" cx="345" cy="215" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
+          <circle cx="345" cy="215" r="2.5" fill="#3aab3a"/>
+          <rect class="p-label-bg" x="263" y="207" width="115" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
+          <text class="p-label-txt" x="320" y="218" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Trincomalee (8.0)</text>
+        </g>
+
+        <!-- Map title -->
+        <rect x="16" y="14" width="170" height="22" rx="5" fill="rgba(255,255,255,.85)"/>
+        <text x="26" y="29" font-family="Space Grotesk,sans-serif" font-weight="700" font-size="11" fill="#0d2144">Brampton Postal Code Zones</text>
+      </svg>
+
+      <!-- Legend -->
+      <div class="map-leg-wrap">
+        <div class="lr"><div class="ld" style="background:#3aab3a"></div>Score 8.0+</div>
+        <div class="lr"><div class="ld" style="background:#f59e0b"></div>Score 7.0–7.9</div>
+        <div class="lr"><div class="ld" style="background:#ef4444"></div>Score below 7.0</div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="map-panel" id="map-panel">
+      <div class="mp-hint" id="mp-hint">
+        <div class="mp-ico">&#127774;</div>
+        <div class="mp-ht">Click a postal zone or pin</div>
+        Select a neighbourhood zone on the map to see its parks, or click a park pin directly.
+      </div>
+      <div class="mp-content" id="mp-content">
+        <div class="mp-header">
+          <div class="mp-zn" id="mp-zn"></div>
+          <div class="mp-zs" id="mp-zs"></div>
+        </div>
+        <div id="mp-parks"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL CARD -->
+  <div class="pdc" id="pdc">
+    <div class="pdc-head">
+      <div class="pdc-name">
+        <span id="pdc-park-name"></span>
+        <span class="pdc-sco" id="pdc-sco"></span>
+      </div>
+      <button class="pdc-x" onclick="closePDC()">&#10005;</button>
+    </div>
+    <div class="pdc-body">
+      <div class="kpis" id="pdc-kpis"></div>
+      <div class="cat-section">
+        <div class="cat-title">Category breakdown</div>
+        <div id="pdc-cats"></div>
+      </div>
+      <div class="tbox"><div class="tt">Field observations</div><div class="tb" id="pdc-thoughts"></div></div>
+    </div>
+  </div>
+</div>
+
+<div style="border-top:1px solid #e2e8f0" class="rv">
+<div class="sec">
+  <div class="ey">Research Projects</div>
+  <div class="sh">Active investigations</div>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="pcs"></div>
+      <div class="pch"><div class="pci ig">&#127795;</div><span class="tag tl">Live</span></div>
+      <div class="pcb">
+        <div class="pct">Park Cleanliness Analytics</div>
+        <div class="pcd">Rating Brampton parks across 8 categories to identify maintenance gaps and push for better resource allocation.</div>
+        <div class="pcm"><span class="pm">&#128197; 2025–2026</span><span class="pm">&#9889; Phase 5</span><span class="pm">11 parks</span></div>
+      </div>
+    </div>
+    <div class="proj-card dim">
+      <div class="pcs"></div>
+      <div class="pch"><div class="pci id">&#128188;</div><span class="tag ts2">Coming Soon</span></div>
+      <div class="pcb">
+        <div class="pct">Youth Employment Dashboard</div>
+        <div class="pcd">Mapping youth employment patterns and gaps across Brampton neighbourhoods.</div>
+        <div class="pcm"><span class="pm">&#128197; Project 2 · TBA</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div style="border-top:1px solid #e2e8f0;padding:3rem 2rem;background:#fff" class="rv">
+  <div class="ey">The Initiative</div>
+  <div class="sh" style="margin-bottom:1.3rem">What CiviqPulse is about</div>
+  <div class="ag">
+    <div class="ac"><div class="ai">&#127919;</div><div class="at">Mission</div><div class="ad">Use data analytics to identify community challenges in Brampton and provide evidence-based recommendations that improve public spaces.</div></div>
+    <div class="ac"><div class="ai">&#128065;&#65039;</div><div class="at">Vision</div><div class="ad">A youth-led initiative helping residents, community groups, and local government make better decisions using data.</div></div>
+    <div class="ac"><div class="ai">&#128194;</div><div class="at">Open data</div><div class="ad">All datasets, reports, and dashboards published openly so anyone can verify, challenge, or build on the findings.</div></div>
+    <div class="ac"><div class="ai">&#127942;</div><div class="at">Community impact</div><div class="ad">Findings shared with City of Brampton, local councillors, and community associations to push for real change.</div></div>
+  </div>
+</div>
+
+<div class="cbar">
+  <div><div class="ct-t">Get in touch</div><div class="ct-s">Follow our research or reach out directly</div></div>
+  <div class="ct-links">
+    <a class="cb cb-ig" href="https://instagram.com/civiqpulse" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>@civiqpulse</a>
+    <a class="cb cb-em" href="mailto:civiqpulse@gmail.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>civiqpulse@gmail.com</a>
+  </div>
+</div>
+<footer class="footer">
+  <div class="fl">
+    <svg width="20" height="22" viewBox="0 0 46 50" xmlns="http://www.w3.org/2000/svg"><path d="M23 2C14.7 2 8 8.7 8 17c0 9.5 15 31 15 31S38 26.5 38 17C38 8.7 31.3 2 23 2z" fill="white" opacity=".3"/><path d="M23 2C14.7 2 8 8.7 8 17c0 9.5 15 31 15 31S38 26.5 38 17C38 8.7 31.3 2 23 2z" fill="#0a8a7a" opacity=".7"/></svg>
+    CiviqPulse
+  </div>
+  <div class="fr"><a onclick="showPage('plan')">Research Plan</a><a onclick="showPage('about')">About</a></div>
+</footer>
+</div>
+
+<!-- PLAN -->
+<div class="page" id="page-plan">
+<div class="rp-hero">
+  <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.4);margin-bottom:8px;font-weight:700;position:relative">Methodology</div>
+  <h1>Park Cleanliness Analytics Research Plan</h1>
+  <p>10-phase execution from scope definition to community impact.</p>
+</div>
+<div class="rp-body">
+  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#0a8a7a;margin-bottom:1rem">Success metrics</div>
+  <div class="mg">
+    <div class="mc"><div class="mn">11</div><div class="ml">Parks surveyed</div></div>
+    <div class="mc"><div class="mn">30–50</div><div class="ml">Observations</div></div>
+    <div class="mc"><div class="mn">5–10</div><div class="ml">Stakeholder outreach</div></div>
+    <div class="mc"><div class="mn">1</div><div class="ml">Published report</div></div>
+    <div class="mc"><div class="mn">1</div><div class="ml">Live dashboard</div></div>
+  </div>
+  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#0a8a7a;margin-bottom:1rem">10-phase plan</div>
+  <div id="phase-list"></div>
+</div>
+<div class="cbar">
+  <div><div class="ct-t">Get in touch</div><div class="ct-s">Follow our research or reach out directly</div></div>
+  <div class="ct-links">
+    <a class="cb cb-ig" href="https://instagram.com/civiqpulse" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>@civiqpulse</a>
+    <a class="cb cb-em" href="mailto:civiqpulse@gmail.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>civiqpulse@gmail.com</a>
+  </div>
+</div>
+<footer class="footer"><div class="fl">CiviqPulse</div><div class="fr"><a onclick="showPage('home')">Home</a><a onclick="showPage('about')">About</a></div></footer>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+<div class="rp-hero">
+  <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.4);margin-bottom:8px;font-weight:700;position:relative">The Initiative</div>
+  <h1>About CiviqPulse</h1>
+  <p>A youth-led community analytics initiative using real data to drive real change in Brampton, Ontario.</p>
+</div>
+<div class="sec">
+  <div class="ag" style="margin-top:0">
+    <div class="ac"><div class="ai">&#127919;</div><div class="at">Mission</div><div class="ad">Use data analytics to identify community challenges in Brampton and provide evidence-based recommendations that improve public spaces and quality of life.</div></div>
+    <div class="ac"><div class="ai">&#128065;&#65039;</div><div class="at">Vision</div><div class="ad">A youth-led initiative helping residents, community organizations, and local government make better decisions using data.</div></div>
+    <div class="ac"><div class="ai">&#127942;</div><div class="at">Long-term goal</div><div class="ad">Portfolio of projects: Park Cleanliness, Youth Employment, Food Accessibility, and Walkability Index.</div></div>
+    <div class="ac"><div class="ai">&#128194;</div><div class="at">Open data</div><div class="ad">All datasets, reports, and dashboards published openly so anyone can verify, challenge, or build on the findings.</div></div>
+  </div>
+</div>
+<div class="cbar">
+  <div><div class="ct-t">Get in touch</div><div class="ct-s">Follow our research or reach out directly</div></div>
+  <div class="ct-links">
+    <a class="cb cb-ig" href="https://instagram.com/civiqpulse" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>@civiqpulse</a>
+    <a class="cb cb-em" href="mailto:civiqpulse@gmail.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>civiqpulse@gmail.com</a>
+  </div>
+</div>
+<footer class="footer"><div class="fl">CiviqPulse</div><div class="fr"><a onclick="showPage('home')">Home</a><a onclick="showPage('plan')">Research Plan</a></div></footer>
+</div>
+
+<script>
+const PARKS={
+  'Andrew McCandless Park':{score:6.9,litter:7,bins:7,grass:8,benches:8,playground:9,graffiti:7,washrooms:2,date:'April 3, 2026',crowd:'High',zone:'L6X',address:'450 Elbern Markell Dr, Brampton, ON L6X',thoughts:'Washrooms in critical condition with severe plumbing failures and odors. Excellent modern multi-sport facilities: skatepark, cricket field, splash pad, and batting cage. Minimal graffiti around the skatepark. Asphalt loop paths are in near-flawless shape.'},
+  'Tillacountry Park':{score:7.8,litter:8,bins:8,grass:8,benches:7,playground:7,graffiti:9,washrooms:null,date:'April 6, 2026',crowd:'Low',zone:'L7A',address:'150 Robert Parkinson Dr, Brampton, ON L7A 0G3',thoughts:'No washrooms. Compact peaceful neighbourhood parkette in Northwest Brampton. Basic well-kept play areas. Excellent sightlines and low vandalism due to direct visibility from surrounding homes.'},
+  'Moody Family Park':{score:8.0,litter:8,bins:8,grass:8,benches:7,playground:8,graffiti:9,washrooms:null,date:'April 10, 2026',crowd:'Moderate',zone:'L7A',address:'40 Robert Parkinson Dr, Brampton, ON L7A',thoughts:'No washrooms. Well-maintained playground in a modern residential block. Highly modern and clean structures with excellent safety features. Open landscape naturally discourages antisocial behaviour.'},
+  'Lola Park':{score:7.7,litter:8,bins:7,grass:8,benches:7,playground:7,graffiti:9,washrooms:null,date:'April 15, 2026',crowd:'Low',zone:'L7A',address:'Brampton, ON L7A 0A8',thoughts:'No washrooms. Small community parkette near Mount Pleasant with a standard play area. Lacks specialized multi-use installations. Light litter accumulations on sunny weekend afternoons.'},
+  'Creditview Sandalwood Park':{score:8.3,litter:8,bins:8,grass:9,benches:8,playground:9,graffiti:8,washrooms:8,date:'April 17, 2026',crowd:'High',zone:'L6V',address:'10510 Creditview Rd, Brampton, ON L7A',thoughts:'State-of-the-art 100-acre destination site with fully AODA-accessible multi-sensory playground. Massive sports complex with multi-use courts, lacrosse boxes, cricket diamonds, and FIFA-approved turf. 3km walking trails and a natural wildlife pond.'},
+  'Worthington Park':{score:7.3,litter:7,bins:7,grass:8,benches:7,playground:7,graffiti:8,washrooms:null,date:'April 21, 2026',crowd:'Moderate',zone:'L6X',address:'75-89 Worthington Ave, Brampton, ON L7A 2A3',thoughts:'No washrooms. Traditional community park with a playground and open green space. Popular skate park and soccer field with steady traffic. Minor cosmetic wear on older play structures.'},
+  'Ahmadiyya Park':{score:8.0,litter:8,bins:8,grass:8,benches:7,playground:8,graffiti:9,washrooms:null,date:'April 25, 2026',crowd:'High',zone:'L6P',address:'340 Remembrance Rd, Brampton, ON',thoughts:'No washrooms. Active community splash pad draws local families. Green spaces cleanly edged and manicured. Open layout provides clear sightlines and an exceptionally low vandalism footprint.'},
+  'Angus Morrison Park':{score:7.8,litter:8,bins:7,grass:8,benches:7,playground:8,graffiti:9,washrooms:null,date:'April 28, 2026',crowd:'Low',zone:'L7A',address:'55 Aylesbury Dr, Brampton, ON L7A 0G2',thoughts:"No washrooms. Entry point for the scenic 4km Mount Pleasant Recreational Trail. Basic children's playground, well-kept but limited for older kids. Light windblown litter on busy weekends."},
+  'Burnt Elm Park':{score:8.0,litter:8,bins:8,grass:8,benches:7,playground:8,graffiti:9,washrooms:null,date:'April 30, 2026',crowd:'Moderate',zone:'L6V',address:'45 Burnt Elm Dr, Brampton, ON L7A 1T8',thoughts:'No washrooms. Active basketball court, shade shelter, and well-equipped playground across 4.9 acres. Mature greenery cleanly trimmed. High layout visibility naturally prevents graffiti.'},
+  'Fiddlers Parkette':{score:7.8,litter:8,bins:8,grass:8,benches:7,playground:7,graffiti:9,washrooms:null,date:'May 3, 2026',crowd:'Low',zone:'L7A',address:'13 Fiddlers Green Dr, Brampton, ON L7A 2S4',thoughts:'No washrooms. Minimalist green space as a passive walking link. Basic play area with safety cushion. Exceptionally clean turf due to small footprint and quick residential accessibility.'},
+  'Trincomalee Park':{score:8.0,litter:8,bins:8,grass:8,benches:7,playground:8,graffiti:9,washrooms:8,date:'May 6, 2026',crowd:'High',zone:'L6V',address:'60 Iguana Trail, Brampton, ON',thoughts:'Highly active municipal splash pad serving as a popular summer hub. Paved loop pathways are structurally sound. Home to a dedicated seniors club ensuring high community presence and clean facilities. Washrooms operational though minor cleaning needed after peak hours.'}
+};
+
+const ZONES={
+  L7A:{full:'L7A — Northwest Brampton',sub:'Mount Pleasant area',parks:['Tillacountry Park','Moody Family Park','Lola Park','Angus Morrison Park','Fiddlers Parkette']},
+  L6P:{full:'L6P — North Brampton',sub:'Sandalwood / Countryside',parks:['Ahmadiyya Park']},
+  L6R:{full:'L6R — Northwest Brampton',sub:'Springdale / Heart Lake',parks:[]},
+  L6S:{full:'L6S — Northeast Brampton',sub:'Bramalea North',parks:[]},
+  L6T:{full:'L6T — Bramalea East',sub:'East Brampton',parks:[]},
+  L6V:{full:'L6V — Central Brampton',sub:'Brampton East',parks:['Creditview Sandalwood Park','Burnt Elm Park','Trincomalee Park']},
+  L6W:{full:'L6W — Downtown Brampton',sub:'Central / Downtown',parks:[]},
+  L6X:{full:'L6X — West Central Brampton',sub:"Fletchers Creek / Spring Valley",parks:['Andrew McCandless Park','Worthington Park']},
+  L6Y:{full:'L6Y — South Brampton',sub:'Brampton South',parks:[]},
+  L6Z:{full:'L6Z — Southeast Brampton',sub:'Airport Road area',parks:[]}
+};
+
+const CATS=['litter','bins','grass','benches','playground','graffiti','washrooms'];
+const CLAB={litter:'Litter on Ground',bins:'Garbage Bins',grass:'Grass & Landscaping',benches:'Benches & Seating',playground:'Playground & Play Areas',graffiti:'Graffiti & Vandalism',washrooms:'Washrooms & Water'};
+
+// Hover emboss via SVG CSS class toggling
+document.querySelectorAll('.z-path').forEach(path=>{
+  path.addEventListener('mouseenter',()=>{
+    if(!path.classList.contains('sel')) path.style.filter='drop-shadow(0 12px 28px rgba(0,0,0,.35)) brightness(1.12)';
+    path.style.transform='translateY(-4px) scale(1.018)';
+    path.style.transition='all .3s cubic-bezier(.34,1.56,.64,1)';
+  });
+  path.addEventListener('mouseleave',()=>{
+    if(!path.classList.contains('sel')){
+      path.style.filter='drop-shadow(0 2px 4px rgba(0,0,0,.15))';
+      path.style.transform='translateY(0) scale(1)';
+    }
+  });
+});
+
+// Park dot label show/hide
+document.querySelectorAll('.p-dot').forEach(dot=>{
+  dot.addEventListener('mouseenter',()=>{
+    const lbg=dot.querySelector('.p-label-bg');
+    const ltxt=dot.querySelector('.p-label-txt');
+    if(lbg)lbg.setAttribute('opacity','1');
+    if(ltxt)ltxt.setAttribute('opacity','1');
+    dot.querySelector('.p-circle').setAttribute('r','7.5');
+  });
+  dot.addEventListener('mouseleave',()=>{
+    const lbg=dot.querySelector('.p-label-bg');
+    const ltxt=dot.querySelector('.p-label-txt');
+    if(lbg&&!dot.classList.contains('sel'))lbg.setAttribute('opacity','0');
+    if(ltxt&&!dot.classList.contains('sel'))ltxt.setAttribute('opacity','0');
+    if(!dot.classList.contains('sel'))dot.querySelector('.p-circle').setAttribute('r','5.5');
+  });
+});
+
+function selectZone(zid){
+  document.querySelectorAll('.z-path').forEach(p=>{
+    p.classList.remove('sel');
+    p.style.filter='drop-shadow(0 2px 4px rgba(0,0,0,.15))';
+    p.style.transform='translateY(0) scale(1)';
+  });
+  const zp=document.getElementById('z-'+zid);
+  if(zp){
+    zp.classList.add('sel');
+    zp.style.filter='drop-shadow(0 12px 28px rgba(10,138,122,.5)) brightness(1.15)';
+    zp.style.transform='translateY(-5px) scale(1.022)';
+  }
+  const z=ZONES[zid];if(!z)return;
+  document.getElementById('mp-hint').style.display='none';
+  document.getElementById('mp-content').style.display='block';
+  document.getElementById('mp-zn').textContent=z.full;
+  document.getElementById('mp-zs').textContent=z.parks.length+' park'+(z.parks.length!==1?'s':'')+' surveyed';
+  const mp=document.getElementById('mp-parks');
+  mp.innerHTML='';
+  if(z.parks.length===0){mp.innerHTML='<div style="padding:1.5rem;text-align:center;font-size:12px;color:#637085">No parks surveyed in this zone yet.</div>';return;}
+  z.parks.forEach(pname=>{
+    const p=PARKS[pname];if(!p)return;
+    const col=p.score>=8?'#3aab3a':p.score>=7.5?'#f59e0b':'#ef4444';
+    const crC=p.crowd==='High'?'#3aab3a':p.crowd==='Moderate'?'#f59e0b':'#94a3b8';
+    const pct=p.score/10*100;
+    mp.innerHTML+=`<div class="pk-card" onclick="selectPark('${pname.replace(/'/g,"\\'")}')">
+      <div class="pk-ring"><svg width="42" height="42" viewBox="0 0 42 42"><circle cx="21" cy="21" r="17" fill="none" stroke="#f1f5f9" stroke-width="2.5"/><circle cx="21" cy="21" r="17" fill="none" stroke="${col}" stroke-width="2.5" stroke-dasharray="${2*Math.PI*17}" stroke-dashoffset="${2*Math.PI*17*(1-pct/100)}" stroke-linecap="round" transform="rotate(-90 21 21)"/></svg><div class="pk-rn" style="color:${col}">${p.score}</div></div>
+      <div class="pk-info">
+        <div class="pk-name">${pname}</div>
+        <div class="pk-meta"><span class="cr-dot" style="background:${crC}"></span>${p.crowd} crowd &nbsp;·&nbsp; ${p.date}</div>
+        <div style="font-size:10px;color:#94a3b8;margin-top:2px">${p.address}</div>
+      </div>
+    </div>`;
+  });
+}
+
+function selectPark(pname){
+  const p=PARKS[pname];if(!p)return;
+  selectZone(p.zone);
+  document.querySelectorAll('.pk-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('.pk-card').forEach(c=>{if(c.querySelector('.pk-name')&&c.querySelector('.pk-name').textContent===pname)c.classList.add('sel')});
+  const pdc=document.getElementById('pdc');
+  pdc.classList.add('show');
+  document.getElementById('pdc-park-name').textContent=pname;
+  const col=p.score>=8?'#5dc45d':p.score>=7.5?'#fbbf24':'#f87171';
+  const sb=document.getElementById('pdc-sco');sb.textContent=p.score;sb.style.color=col;
+  document.getElementById('pdc-kpis').innerHTML=`
+    <div class="kpi"><div class="kn" style="color:${col}">${p.score}</div><div class="kl">Final Score</div></div>
+    <div class="kpi"><div class="kn">${p.crowd}</div><div class="kl">Crowd Level</div></div>
+    <div class="kpi"><div class="kn">${p.washrooms!==null?p.washrooms:'N/A'}</div><div class="kl">Washrooms</div></div>
+    <div class="kpi"><div class="kn" style="font-size:11px;padding-top:4px">${p.date}</div><div class="kl">Date Visited</div></div>`;
+  let ch='';
+  CATS.forEach((cat,i)=>{
+    const v=p[cat];if(v===null)return;
+    const pct=(v/12.5)*100;
+    const c=v>=11?'#3aab3a':v>=9?'#0a8a7a':v>=7?'#f59e0b':'#ef4444';
+    ch+=`<div class="cr"><div class="cn">${CLAB[cat]}</div><div class="ct"><div class="cf" style="width:${pct}%;--d:${i*.07}s;background:${c}"></div></div><div class="cv" style="color:${c}">${v}</div></div>`;
+  });
+  document.getElementById('pdc-cats').innerHTML=ch;
+  document.getElementById('pdc-thoughts').textContent=p.thoughts;
+  // Address line
+  const tbody=document.getElementById('pdc-thoughts');
+  tbody.parentElement.innerHTML+=`<div style="font-size:11px;color:#94a3b8;margin-top:8px;display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${p.address}</div>`;
+  setTimeout(()=>pdc.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+function closePDC(){document.getElementById('pdc').classList.remove('show')}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nl').forEach(l=>l.classList.remove('on'));
+  document.getElementById('page-'+id).classList.add('on');
+  const e=document.getElementById('nl-'+id);if(e)e.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+const phases=[
+  {n:'01',t:'Define Scope',d:'Select 8 to 12 parks across Brampton including large, neighbourhood, high-traffic, and school-adjacent parks.',s:'done'},
+  {n:'02',t:'Design Methodology',d:'Create the Park Cleanliness Score (0 to 100) across 8 observable categories at 12.5 pts each.',s:'done'},
+  {n:'03',t:'Collect Data',d:'Visit each park on weekdays and weekends. Record park, date, crowd level, scores per category, and observations.',s:'done'},
+  {n:'04',t:'Analyze Data',d:'Compare parks by score. Identify patterns by size, traffic, timing, and bin availability. Build rankings and charts.',s:'done'},
+  {n:'05',t:'Generate Insights',d:'Develop evidence-based recommendations: add bins, increase weekend maintenance, improve signage.',s:'active'},
+  {n:'06',t:'Create Deliverables',d:'Build a dashboard, write a 5 to 10 page report, and prepare a 10 to 12 slide presentation.',s:'upcoming'},
+  {n:'07',t:'Community Outreach',d:'Share findings with Brampton Parks Dept., local councillors, and community associations.',s:'upcoming'},
+  {n:'08',t:'Measure Impact',d:'Track observations, stakeholders contacted, responses received, and recommendations acknowledged.',s:'upcoming'},
+  {n:'09',t:'Publish Work',d:'Publish the full dataset, dashboard, report, and presentation online.',s:'upcoming'},
+  {n:'10',t:'Expand CiviqPulse',d:'Launch Project 2: Youth Employment Dashboard. Then Food Accessibility, then Walkability Index.',s:'upcoming'}
+];
+const pl=document.getElementById('phase-list');
+phases.forEach(p=>{
+  const sc=p.s==='done'?'ph-done':p.s==='active'?'ph-active':'ph-up';
+  const bt=p.s==='done'?'pb-done':p.s==='active'?'pb-act':'pb-up';
+  const bl=p.s==='done'?'Complete':p.s==='active'?'In Progress':'Upcoming';
+  pl.innerHTML+=`<div class="phase ${sc}"><div class="ph-n">${p.n}</div><div style="flex:1"><div class="ph-t">${p.t}</div><div class="ph-d">${p.d}</div></div><div class="pb ${bt}">${bl}</div></div>`;
+});
+
+const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting)e.target.classList.add('vs')},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
