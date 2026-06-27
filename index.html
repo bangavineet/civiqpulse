@@ -1,818 +1,2291 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--navy:#0d2144;--teal:#0a8a7a;--green:#3aab3a;--bg:#f0f4f8;--white:#fff;--muted:#637085;--border:#e2e8f0}
-html,body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--navy);overflow-x:hidden}
-.page{display:none;min-height:100vh}.page.on{display:block}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CiviqPulse | A Youth-Led Analytics initiative</title>
+  <style>
+    :root {
+      --navy: #062754;
+      --navy-2: #0b3767;
+      --teal: #007f8c;
+      --teal-2: #0a9aa1;
+      --green: #2f8f2f;
+      --green-2: #63b23b;
+      --amber: #d99016;
+      --red: #c94c3f;
+      --ink: #102033;
+      --muted: #64748b;
+      --soft: #eef5f3;
+      --surface: #ffffff;
+      --line: #dbe6e4;
+      --shadow: 0 18px 50px rgba(6, 39, 84, .12);
+      --radius: 8px;
+    }
 
-.nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:9999;box-shadow:0 1px 12px rgba(13,33,68,.06)}
-.logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}
-.nl{font-size:13px;font-weight:500;color:#637085;padding:7px 13px;border-radius:8px;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
-.nl:hover{background:#f1f5f9;color:#0f1c2e}.nl.on{background:rgba(10,138,122,.1);color:#0a8a7a;font-weight:600}
-.nav-links{display:flex;align-items:center;gap:4px;flex-shrink:0}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #f7faf9;
+    }
 
-.hero{background:linear-gradient(135deg,#0d2144 0%,#0b3060 45%,#083d30 100%);padding:4.5rem 2rem 3.5rem;text-align:center;position:relative;overflow:hidden}
-.hg{position:absolute;border-radius:50%;pointer-events:none;animation:hgf 6s ease-in-out infinite}
-.hg1{width:400px;height:400px;background:radial-gradient(circle,rgba(10,138,122,.18),transparent 70%);top:-100px;left:-100px;animation-delay:0s}
-.hg2{width:350px;height:350px;background:radial-gradient(circle,rgba(58,171,58,.12),transparent 70%);bottom:-80px;right:-80px;animation-delay:-3s}
-@keyframes hgf{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-20px) scale(1.05)}}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 15px;border-radius:20px;font-size:11px;color:rgba(255,255,255,.9);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;position:relative;z-index:2;animation:sup .6s ease both}
-.pr{width:7px;height:7px;border-radius:50%;background:#5dc45d;position:relative;flex-shrink:0}
-.pr::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid #5dc45d;animation:ring 1.6s ease-out infinite}
-@keyframes ring{0%{transform:scale(1);opacity:1}100%{transform:scale(2.5);opacity:0}}
-@keyframes sup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.hero h1{font-family:'Space Grotesk',sans-serif;font-size:50px;font-weight:800;line-height:1.06;letter-spacing:-2.5px;color:#fff;margin-bottom:.9rem;position:relative;z-index:2;animation:sup .7s ease .1s both}
-.hero h1 .g{color:#5dc45d}
-.hero-sub{font-size:15px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto 2.2rem;line-height:1.75;position:relative;z-index:2;animation:sup .7s ease .2s both}
-.ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;animation:sup .7s ease .3s both}
-.btn-w{background:#fff;color:#0d2144;border:none;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
-.btn-w:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.25)}
-.btn-o{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s;font-family:'Inter',sans-serif}
-.btn-o:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
 
-.ticker{overflow:hidden;background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 0}
-.ti{display:flex;gap:3rem;animation:scr 28s linear infinite;width:max-content}
-.tick{font-size:12px;color:#637085;white-space:nowrap;display:flex;align-items:center;gap:7px}
-.tick b{color:#0a8a7a;font-weight:700}
-.tsep{color:#e2e8f0;font-size:20px;line-height:1}
-@keyframes scr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .shell { min-height: 100vh; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 60px;
+      padding: 7px clamp(18px, 3vw, 42px);
+      background: rgba(255, 255, 255, .92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-bottom:1px solid #e2e8f0}
-.sc{padding:1.4rem;text-align:center;border-right:1px solid #e2e8f0;position:relative;overflow:hidden;transition:background .25s}
-.sc:last-child{border-right:none}.sc:hover{background:#f8fcfb}
-.sc::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:linear-gradient(90deg,#0a8a7a,#3aab3a);transition:width .35s}
-.sc:hover::after{width:60%}
-.sn{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#0a8a7a,#3aab3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sl{font-size:11px;color:#637085;text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+    }
 
-/* ===== MAP SECTION ===== */
-.map-sec{padding:3rem 2rem;background:#fff;border-top:1px solid #e2e8f0}
-.ey{display:inline-flex;align-items:center;gap:8px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#0a8a7a;font-weight:700;margin-bottom:7px}
-.ey::before{content:'';display:inline-block;width:14px;height:2px;background:#0a8a7a;border-radius:2px}
-.sh{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:800;color:#0d2144;letter-spacing:-1px;margin-bottom:6px}
-.sp2{font-size:13px;color:#637085;line-height:1.7;margin-bottom:1.5rem}
-.map-layout{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start}
+    .brand-icon {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
 
-/* SVG MAP */
-.map-wrap{background:linear-gradient(160deg,#e8f4f0 0%,#dceee8 100%);border-radius:20px;border:1.5px solid #e2e8f0;overflow:hidden;position:relative;box-shadow:0 8px 40px rgba(13,33,68,.08)}
-.map-wrap svg{display:block;width:100%;height:auto}
+    .brand-wordmark {
+      width: auto;
+      height: 50px;
+      object-fit: contain;
+      display: block;
+    }
 
-/* Zone paths - emboss hover effect */
-.z-path{cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}
-.z-path:hover{filter:drop-shadow(0 8px 20px rgba(0,0,0,.25)) brightness(1.1);transform:translateY(-3px) scale(1.015)}
-.z-path.sel{filter:drop-shadow(0 10px 24px rgba(10,138,122,.4)) brightness(1.12);transform:translateY(-4px) scale(1.018)}
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
 
-/* Zone label group */
-.z-label-g{pointer-events:none;transition:transform .3s}
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 750;
+      padding: 9px 11px;
+      border-radius: var(--radius);
+    }
 
-/* Park dots on SVG */
-.p-dot{cursor:pointer;transition:all .2s}
-.p-dot:hover .p-circle{r:7;opacity:1}
-.p-dot.sel .p-circle{stroke-width:3;opacity:1}
-.p-dot:hover .p-label-bg{opacity:1}
-.p-dot:hover .p-label-txt{opacity:1}
+    .nav a:hover,
+    .nav a.active {
+      color: var(--teal);
+      background: #e9f6f5;
+    }
 
-/* Legend */
-.map-leg-wrap{position:absolute;bottom:16px;left:16px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid #e2e8f0;border-radius:10px;padding:.7rem 1rem;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.lr{display:flex;align-items:center;gap:7px;font-size:11px;color:#637085;margin-bottom:4px;font-family:'Inter',sans-serif}
-.lr:last-child{margin-bottom:0}
-.ld{width:10px;height:10px;border-radius:50%}
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 245px;
+      padding: clamp(20px, 3.6vw, 36px) clamp(18px, 5vw, 72px);
+      text-align: center;
+      color: #fff;
+      background: linear-gradient(135deg, #0b2e61 0%, #0a2b5a 44%, #063f35 100%);
+    }
 
-/* RIGHT PANEL */
-.map-panel{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;position:sticky;top:80px;max-height:500px;overflow-y:auto;box-shadow:0 4px 20px rgba(13,33,68,.06)}
-.mp-hint{padding:2.5rem 1.5rem;text-align:center;color:#637085;font-size:13px;line-height:1.65}
-.mp-ico{font-size:34px;margin-bottom:10px}
-.mp-ht{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0d2144;font-size:14px;margin-bottom:5px}
-.mp-header{padding:.9rem 1.2rem;border-bottom:1px solid #e2e8f0;background:linear-gradient(135deg,#f8fafc,#f0f9f7);position:sticky;top:0;z-index:5}
-.mp-zn{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#0d2144}
-.mp-zs{font-size:11px;color:#637085;margin-top:2px}
-.mp-content{display:none}
-.pk-card{padding:.85rem 1.1rem;border-bottom:1px solid #e2e8f0;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:11px}
-.pk-card:last-child{border-bottom:none}
-.pk-card:hover{background:#f8fcfb;transform:translateX(2px)}
-.pk-card.sel{background:rgba(10,138,122,.06);border-left:3px solid #0a8a7a}
-.pk-ring{width:42px;height:42px;flex-shrink:0;position:relative}
-.pk-rn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700}
-.pk-info{flex:1;min-width:0}
-.pk-name{font-size:13px;font-weight:700;color:#0d2144;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pk-meta{font-size:11px;color:#637085;margin-top:2px;display:flex;align-items:center;gap:5px}
-.cr-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 45%, rgba(99, 178, 59, .16), transparent 42%);
+      pointer-events: none;
+    }
 
-/* PARK DETAIL */
-.pdc{display:none;margin-top:20px;border:1px solid rgba(10,138,122,.2);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 8px 40px rgba(10,138,122,.1);animation:pdc-in .4s cubic-bezier(.34,1.56,.64,1)}
-@keyframes pdc-in{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.pdc.show{display:block}
-.pdc-head{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;background:linear-gradient(135deg,#0d2144,#0a3a6a);border-bottom:1px solid rgba(10,138,122,.3)}
-.pdc-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px;min-width:0}
-.pdc-sco{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:3px 10px;border-radius:8px;font-size:13px;font-weight:800;flex-shrink:0}
-.pdc-x{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);width:30px;height:30px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;flex-shrink:0}
-.pdc-x:hover{background:rgba(255,255,255,.2);color:#fff}
-.pdc-body{padding:1.3rem 1.5rem}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.2rem}
-.kpi{background:linear-gradient(135deg,#f8fafc,#f0f9f7);border:1px solid #e2e8f0;border-radius:12px;padding:.8rem;text-align:center;transition:transform .2s}
-.kpi:hover{transform:translateY(-2px)}
-.kn{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;color:#0a8a7a}
-.kl{font-size:10px;color:#637085;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;line-height:1.3}
-.cat-section{margin-bottom:1.1rem}
-.cat-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#0a8a7a;margin-bottom:.7rem}
-.cr{display:flex;align-items:center;gap:9px;margin-bottom:7px}
-.cn{font-size:11px;color:#637085;width:130px;flex-shrink:0;text-align:right}
-.ct{flex:1;background:#f1f5f9;border-radius:5px;height:12px;overflow:hidden}
-.cf{height:100%;border-radius:5px;transform-origin:left;animation:bf .8s cubic-bezier(.34,1.56,.64,1) var(--d,0s) both}
-@keyframes bf{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.cv{font-size:11px;font-weight:800;width:28px;flex-shrink:0;font-family:'Space Grotesk',sans-serif}
-.tbox{background:linear-gradient(135deg,#f8fafc,#f0f9f7);border:1px solid #e2e8f0;border-radius:12px;padding:1rem}
-.tt{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#0a8a7a;margin-bottom:6px}
-.tb{font-size:12px;color:#637085;line-height:1.75}
+    .hero > * { position: relative; z-index: 1; }
+    .hero-inner {
+      width: min(720px, 100%);
+      margin: 0 auto;
+    }
 
-/* about/projects */
-.sec{padding:3rem 2rem}
-.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:1.5rem}
-.ac{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.3rem;transition:all .3s;position:relative;overflow:hidden}
-.ac::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#0a8a7a,#3aab3a);transform:scaleX(0);transform-origin:left;transition:transform .3s}
-.ac:hover{border-color:rgba(10,138,122,.3);transform:translateY(-4px);box-shadow:0 8px 30px rgba(10,138,122,.1)}.ac:hover::after{transform:scaleX(1)}
-.ai{font-size:24px;margin-bottom:10px}.at{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#0d2144;margin-bottom:4px}.ad{font-size:12px;color:#637085;line-height:1.65}
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--green-2);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+    }
 
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:1.5rem}
-.proj-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s}
-.proj-card:not(.dim):hover{border-color:#0a8a7a;box-shadow:0 12px 40px rgba(10,138,122,.12);transform:translateY(-4px)}
-.proj-card.dim{opacity:.5;cursor:default;pointer-events:none}
-.pcs{height:4px;background:linear-gradient(90deg,#0d2144,#0a8a7a,#3aab3a);transform:scaleX(0);transform-origin:left;transition:transform .4s}
-.proj-card:hover .pcs{transform:scaleX(1)}
-.pch{padding:1.2rem 1.2rem .5rem;display:flex;justify-content:space-between;align-items:flex-start}
-.pci{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.ig{background:rgba(58,171,58,.1)}.id{background:#f1f5f9}
-.tag{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:4px 10px;border-radius:6px}
-.tl{background:rgba(58,171,58,.12);color:#3aab3a;border:1px solid rgba(58,171,58,.25)}
-.ts2{background:#f1f5f9;color:#94a3b8;border:1px solid #e2e8f0}
-.pcb{padding:0 1.2rem 1.2rem}
-.pct{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#0d2144;margin-bottom:5px}
-.pcd{font-size:12px;color:#637085;line-height:1.65;margin-bottom:.9rem}
-.pcm{display:flex;gap:8px;padding-top:.8rem;border-top:1px solid #e2e8f0;flex-wrap:wrap}
-.pm{background:#f1f5f9;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:500;color:#637085}
+    .kicker::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      background: var(--green-2);
+      border-radius: 99px;
+    }
 
-/* contact / footer */
-.cbar{background:linear-gradient(135deg,#0d2144,#0a3a6a);padding:2.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.ct-t{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
-.ct-s{font-size:13px;color:rgba(255,255,255,.5)}
-.ct-links{display:flex;gap:12px;flex-wrap:wrap}
-.cb{display:flex;align-items:center;gap:8px;padding:11px 20px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .25s;font-family:'Inter',sans-serif}
-.cb-ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;border:none}
-.cb-ig:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(253,29,29,.3)}
-.cb-em{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.cb-em:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
-.footer{background:#06101e;color:rgba(255,255,255,.4);padding:1.4rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px}
-.fl{display:flex;align-items:center;gap:8px;color:#fff;font-weight:600;font-size:13px}
-.fr{display:flex;gap:14px}.fr a{color:rgba(255,255,255,.4);text-decoration:none;cursor:pointer;transition:color .2s}.fr a:hover{color:#5dc45d}
+    .hero .kicker {
+      padding: 4px 12px;
+      color: rgba(255,255,255,.9);
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: .9px;
+    }
 
-/* PLAN page */
-.rp-hero{background:linear-gradient(135deg,#0d2144,#0b3060);padding:3rem 2rem;color:#fff;position:relative;overflow:hidden}
-.rp-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,rgba(10,138,122,.15),transparent 60%);pointer-events:none}
-.rp-hero h1{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1.5px;margin-bottom:8px;position:relative}
-.rp-hero p{font-size:14px;color:rgba(255,255,255,.6);max-width:500px;line-height:1.75;position:relative}
-.rp-body{padding:2rem}
-.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:2rem}
-.mc{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;text-align:center;transition:all .25s}
-.mc:hover{transform:translateY(-2px);border-color:rgba(10,138,122,.3)}
-.mn{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;background:linear-gradient(135deg,#0a8a7a,#3aab3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.ml{font-size:10px;color:#637085;text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
-.phase{display:flex;gap:13px;padding:13px 15px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;margin-bottom:10px;transition:all .25s;align-items:flex-start}
-.phase:hover{border-color:rgba(10,138,122,.3);transform:translateX(2px)}
-.ph-n{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;font-family:'Space Grotesk',sans-serif}
-.ph-done .ph-n{background:rgba(58,171,58,.12);color:#3aab3a}
-.ph-active .ph-n{background:#0a8a7a;color:#fff}
-.ph-up .ph-n{background:#f1f5f9;color:#637085}
-.ph-t{font-size:13px;font-weight:700;color:#0d2144;margin-bottom:3px}
-.ph-d{font-size:12px;color:#637085;line-height:1.6}
-.pb{font-size:10px;font-weight:700;padding:4px 10px;border-radius:7px;flex-shrink:0;align-self:center}
-.pb-done{background:rgba(58,171,58,.1);color:#3aab3a}
-.pb-act{background:rgba(10,138,122,.1);color:#0a8a7a}
-.pb-up{background:#f1f5f9;color:#637085}
+    .hero .kicker::before {
+      width: 8px;
+      height: 8px;
+      background: var(--green-2);
+      box-shadow: 0 0 0 8px rgba(99,178,59,.14);
+    }
 
-.rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
-.rv.vs{opacity:1;transform:translateY(0)}
-</style>
+    h1 {
+      margin: 12px 0;
+      max-width: 880px;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .hero h1 {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 720px;
+      font-size: clamp(30px, 3.45vw, 42px);
+      line-height: 1.07;
+      font-weight: 700;
+    }
+
+    .accent { color: #55d557; }
+
+    .hero-copy {
+      max-width: 580px;
+      margin: 0 auto 14px;
+      color: rgba(255,255,255,.64);
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .btn.primary {
+      background: #fff;
+      color: var(--navy);
+      box-shadow: 0 16px 34px rgba(0,0,0,.18);
+    }
+
+    .btn.secondary {
+      color: #fff;
+      border-color: rgba(255,255,255,.28);
+      background: rgba(255,255,255,.08);
+    }
+
+    .btn svg { width: 18px; height: 18px; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      min-height: 116px;
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 34px rgba(6,39,84,.08);
+    }
+
+    .stat .num {
+      color: var(--teal);
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .stat .label {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    .snapshot-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      background: #fff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .snapshot-cell {
+      min-height: 98px;
+      display: grid;
+      place-items: center;
+      padding: 16px 12px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+    }
+
+    .snapshot-cell:last-child { border-right: 0; }
+
+    .snapshot-cell strong {
+      display: block;
+      color: #189652;
+      font-size: clamp(26px, 3vw, 34px);
+      line-height: 1;
+      font-weight: 760;
+    }
+
+    .snapshot-cell span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .view[hidden],
+    .project-data[hidden],
+    .project-placeholder[hidden] {
+      display: none;
+    }
+
+    main { position: relative; }
+    section {
+      padding: clamp(32px, 4vw, 54px) clamp(18px, 5vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    #projects {
+      padding-top: clamp(24px, 3vw, 38px);
+      padding-bottom: clamp(30px, 3.5vw, 46px);
+    }
+
+    #projects .section-head {
+      margin-bottom: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      margin: 7px 0 0;
+      color: var(--navy);
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .field {
+      position: relative;
+      min-width: min(280px, 100%);
+    }
+
+    .field svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      width: 17px;
+      height: 17px;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .field input,
+    select {
+      width: 100%;
+      min-height: 42px;
+      padding: 0 12px;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      outline: none;
+    }
+
+    .field input { padding-left: 38px; }
+    .field input:focus,
+    select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0,127,140,.12);
+    }
+
+    .map-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(330px, 420px);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .map-shell {
+      position: relative;
+      height: 680px;
+      min-height: 680px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.72), rgba(234,246,242,.86)),
+        repeating-linear-gradient(0deg, transparent 0 52px, rgba(6,39,84,.04) 53px),
+        repeating-linear-gradient(90deg, transparent 0 52px, rgba(6,39,84,.04) 53px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      touch-action: none;
+    }
+
+    .map-stage {
+      position: absolute;
+      inset: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+    .zone-svg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 900px;
+      height: 620px;
+      transform: translate(-50%, -50%);
+      overflow: visible;
+    }
+
+    .zone-shape {
+      cursor: pointer;
+      stroke: rgba(255,255,255,.9);
+      stroke-width: 3;
+      transition: opacity .2s ease, filter .2s ease, transform .2s ease;
+      filter: drop-shadow(0 8px 13px rgba(6,39,84,.16));
+    }
+
+    .zone-shape:hover,
+    .zone-shape.selected {
+      filter: drop-shadow(0 14px 22px rgba(0,127,140,.22));
+      opacity: .96;
+    }
+
+    .zone-label {
+      pointer-events: none;
+      fill: rgba(255,255,255,.94);
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .zone-label-sub {
+      pointer-events: none;
+      fill: rgba(255,255,255,.72);
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .pin-layer {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 900px;
+      height: 620px;
+      transform: translate(-50%, -50%);
+    }
+
+    .pin {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      transform: translate(-50%, -100%);
+      border: 0;
+      background: transparent;
+      padding: 0;
+      z-index: 4;
+    }
+
+    .pin::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--pin-color);
+      border: 3px solid #fff;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow: 0 5px 12px rgba(6,39,84,.28);
+    }
+
+    .pin::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -76%);
+    }
+
+    .pin:hover,
+    .pin.selected {
+      z-index: 8;
+      transform: translate(-50%, -100%) scale(1.2);
+    }
+
+    .pin.hidden { display: none; }
+
+    .map-controls {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      z-index: 12;
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.94);
+      color: var(--navy);
+      box-shadow: 0 8px 18px rgba(6,39,84,.1);
+    }
+
+    .icon-btn:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    .icon-btn svg { width: 18px; height: 18px; }
+
+    .legend {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      z-index: 12;
+      display: grid;
+      gap: 7px;
+      max-width: calc(100% - 28px);
+      padding: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(6,39,84,.1);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--swatch);
+    }
+
+    .popover {
+      position: absolute;
+      z-index: 18;
+      width: min(320px, calc(100% - 30px));
+      padding: 14px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 22px 48px rgba(6,39,84,.2);
+      transform: translate(-50%, calc(-100% - 22px));
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .12s ease;
+    }
+
+    .popover.show { opacity: 1; }
+
+    .popover-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .popover-score {
+      flex: 0 0 auto;
+    }
+
+    .popover h3 {
+      margin: 0 0 6px;
+      color: var(--navy);
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .popover .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0;
+    }
+
+    .popover-factor {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin: 12px 0 10px;
+      padding: 9px 10px;
+      background: #f4faf8;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .popover-factor span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    .popover-factor strong {
+      color: var(--navy);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      color: var(--teal);
+      background: #e8f6f4;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .popover p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .panel {
+      height: 680px;
+      min-height: 680px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+    }
+
+    .panel-head {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, #fff, #eef9f7);
+    }
+
+    .panel-head h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .panel-head p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .zone-strip {
+      display: flex;
+      gap: 6px;
+      padding: 10px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .zone-chip {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 0 11px;
+      color: var(--muted);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .zone-chip.active {
+      color: #fff;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    .park-list {
+      overflow: auto;
+      min-height: 0;
+    }
+
+    .park-row {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      padding: 12px 14px;
+      color: inherit;
+      text-align: left;
+      background: #fff;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .park-row:hover,
+    .park-row.active {
+      background: #f1faf8;
+    }
+
+    .score-ring {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--score-color);
+      background:
+        radial-gradient(circle at center, #fff 58%, transparent 60%),
+        conic-gradient(var(--score-color) calc(var(--score) * 1%), #e4ecea 0);
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .park-title {
+      color: var(--navy);
+      font-weight: 850;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .park-sub {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .crowd {
+      color: var(--crowd-color);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .detail {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 18px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+
+    .module {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 34px rgba(6,39,84,.08);
+    }
+
+    .detail .module.pad {
+      max-height: 390px;
+      overflow: auto;
+    }
+
+    .module.pad { padding: 14px; }
+
+    .selected-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .selected-title h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(19px, 1.8vw, 24px);
+      line-height: 1.12;
+    }
+
+    .address {
+      margin-top: 5px;
+      color: var(--muted);
+      line-height: 1.35;
+      font-size: 13px;
+    }
+
+    .big-score {
+      min-width: 82px;
+      padding: 10px 9px;
+      color: #fff;
+      background: var(--score-color);
+      border-radius: var(--radius);
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .big-score span {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      opacity: .86;
+    }
+
+    .big-score strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .mini {
+      padding: 9px;
+      background: #f6faf9;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .mini strong {
+      display: block;
+      color: var(--navy);
+      font-size: 15px;
+      line-height: 1.15;
+    }
+
+    .mini span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    .bars {
+      display: grid;
+      gap: 6px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px minmax(80px, 1fr) 36px;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .bar-label {
+      color: var(--muted);
+      font-weight: 750;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bar-track {
+      height: 8px;
+      background: #e7eeec;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: var(--bar-width);
+      background: var(--bar-color);
+      border-radius: inherit;
+    }
+
+    .bar-value {
+      color: var(--navy);
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .thoughts {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .thoughts li {
+      color: var(--muted);
+      line-height: 1.42;
+      font-size: 13px;
+    }
+
+    .thoughts a {
+      color: var(--teal);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .thoughts a:hover {
+      text-decoration: underline;
+    }
+
+    .about-details {
+      margin-top: 18px;
+    }
+
+    .thoughts li::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      transform: translateY(-1px);
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .project-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 172px;
+      padding: 16px;
+      color: inherit;
+      text-align: left;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 34px rgba(6,39,84,.08);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0,127,140,.38);
+      box-shadow: 0 18px 44px rgba(6,39,84,.12);
+    }
+
+    .project-card.active {
+      border-color: var(--teal);
+      box-shadow: 0 18px 48px rgba(0,127,140,.18);
+    }
+
+    .project-card h3 {
+      margin: 10px 0 7px;
+      color: var(--navy);
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .project-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 12px;
+    }
+
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 20px;
+      padding: 0 7px;
+      color: var(--teal);
+      background: #e8f6f4;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .55px;
+    }
+
+    .project-card.active .project-badge:first-child {
+      color: #fff;
+      background: var(--teal);
+    }
+
+    .project-card:disabled,
+    .project-card[aria-disabled="true"] {
+      cursor: default;
+      opacity: .68;
+    }
+
+    .project-card:disabled:hover,
+    .project-card[aria-disabled="true"]:hover {
+      transform: none;
+      border-color: var(--line);
+      box-shadow: 0 12px 34px rgba(6,39,84,.08);
+    }
+
+    .project-placeholder {
+      background: #f4faf8;
+    }
+
+    .evidence {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 34px rgba(6,39,84,.08);
+    }
+
+    .evidence h3 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .evidence p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .evidence .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      margin-bottom: 12px;
+      padding: 0 9px;
+      color: var(--teal);
+      background: #e8f6f4;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .evidence-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 12px 34px rgba(6,39,84,.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 780px;
+    }
+
+    th, td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      color: var(--navy);
+      background: #f4faf8;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    td { color: var(--muted); }
+    td strong { color: var(--navy); }
+
+    .ranking {
+      color: #fff;
+      background: var(--score-color);
+      display: inline-grid;
+      place-items: center;
+      min-width: 34px;
+      min-height: 28px;
+      padding: 0 8px;
+      border-radius: var(--radius);
+      font-weight: 900;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+      gap: 18px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr) 104px;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .phase-num {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      color: #fff;
+      background: var(--navy);
+      border-radius: 50%;
+      font-weight: 900;
+    }
+
+    .phase h3 {
+      margin: 0 0 5px;
+      color: var(--navy);
+      font-size: 16px;
+    }
+
+    .phase p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .status {
+      justify-self: end;
+      padding: 6px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .done { color: var(--green); background: #eaf6e8; }
+    .active-status { color: var(--teal); background: #e8f6f4; }
+    .next { color: var(--muted); background: #eef2f4; }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px clamp(18px, 5vw, 72px);
+      color: rgba(255,255,255,.48);
+      background: #06101e;
+      font-size: 12px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-weight: 650;
+      font-size: 13px;
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      opacity: .82;
+    }
+
+    .footer-contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .footer-contact a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 26px;
+      padding: 0 10px;
+      color: rgba(255,255,255,.78);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 8px;
+      background: rgba(255,255,255,.06);
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+
+    .footer-contact a:hover {
+      color: #fff;
+      background: rgba(255,255,255,.12);
+      transform: translateY(-1px);
+    }
+
+    .footer-contact svg {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,.48);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color .2s ease;
+    }
+
+    .footer-links a:hover { color: #5dc45d; }
+
+    .notice {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      color: #7a4e08;
+      background: #fff7e8;
+      border: 1px solid #f0d39a;
+      border-radius: var(--radius);
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .notice.show { display: block; }
+
+    @media (max-width: 1100px) {
+      .map-layout,
+      .detail,
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .panel { min-height: 560px; }
+      .panel { height: 560px; }
+      .map-shell { height: 620px; min-height: 620px; }
+      .grid-4,
+      .project-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .brand { min-width: 0; }
+      .nav { justify-content: flex-start; }
+      .hero { min-height: auto; }
+      .stat-grid,
+      .metric-strip,
+      .grid-4,
+      .project-cards,
+      .snapshot-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .map-shell { height: 540px; min-height: 540px; }
+      .panel { height: 520px; min-height: 520px; }
+      .phase { grid-template-columns: 46px minmax(0, 1fr); }
+      .status { justify-self: start; grid-column: 2; }
+      .bar-row { grid-template-columns: 118px minmax(70px, 1fr) 30px; }
+      .footer { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-
-<nav class="nav">
-  <div class="logo" onclick="showPage('home')">
-    <!-- Actual CiviqPulse logo recreation -->
-    <svg height="40" viewBox="0 0 46 50" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
-      <!-- Pin outer shape -->
-      <path d="M23 2C14.7 2 8 8.7 8 17c0 9.5 15 31 15 31S38 26.5 38 17C38 8.7 31.3 2 23 2z" fill="#0d2144"/>
-      <!-- White inner circle -->
-      <circle cx="23" cy="17" r="12" fill="white"/>
-      <!-- Tree (green circle + trunk) -->
-      <circle cx="19" cy="15.5" r="5.5" fill="#3aab3a"/>
-      <rect x="18.2" y="19.5" width="1.6" height="3" rx=".4" fill="#5a3820"/>
-      <!-- Bar chart -->
-      <rect x="25.5" y="19" width="2.5" height="3.5" rx=".5" fill="#0a8a7a"/>
-      <rect x="28.5" y="16" width="2.5" height="6.5" rx=".5" fill="#0a8a7a"/>
-      <rect x="31.5" y="13" width="2.5" height="9.5" rx=".5" fill="#3aab3a"/>
-      <!-- Heartbeat line over top -->
-      <polyline points="11,16 14.5,16 16,13.5 17.5,20 19,10 20.5,16.5 22,14 25.5,14" stroke="#0a8a7a" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="25.5" cy="14" r="1.2" fill="#0a8a7a"/>
-      <!-- Drop shadow/base -->
-      <ellipse cx="23" cy="34" rx="5" ry="1.5" fill="rgba(10,138,122,.2)"/>
-    </svg>
-    <div style="flex-shrink:0">
-      <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:800;letter-spacing:-.4px;line-height:1;color:#0d2144">Civiq<span style="color:#0a8a7a">Pulse</span></div>
-    </div>
-  </div>
-  <div class="nav-links">
-    <button class="nl on" id="nl-home" onclick="showPage('home')">Home</button>
-    <button class="nl" id="nl-plan" onclick="showPage('plan')">Research Plan</button>
-    <button class="nl" id="nl-about" onclick="showPage('about')">About</button>
-  </div>
-</nav>
-
-<!-- HOME -->
-<div class="page on" id="page-home">
-<div class="hero">
-  <div class="hg hg1"></div><div class="hg hg2"></div>
-  <div class="hero-badge"><div class="pr"></div>Active Research — 2025–2026</div>
-  <h1>Turning <span class="g">community data</span><br>into real change.</h1>
-  <p class="hero-sub">CiviqPulse is a youth-led analytics initiative identifying what is broken in our city and backing it up with data.</p>
-  <div class="ctas">
-    <button class="btn-w" onclick="document.getElementById('map-sec').scrollIntoView({behavior:'smooth'})">Explore Park Data</button>
-    <button class="btn-o" onclick="showPage('plan')">View Research Plan</button>
-  </div>
-</div>
-
-<div class="ticker">
-  <div class="ti">
-    <span class="tick"><b>11</b> parks surveyed</span><span class="tsep">·</span>
-    <span class="tick"><b>8</b> score categories · 12.5 pts each</span><span class="tsep">·</span>
-    <span class="tick">Litter · Bins · Grass · Benches · Playground · Graffiti · Washrooms</span><span class="tsep">·</span>
-    <span class="tick"><b>Apr–May 2026</b> field visits</span><span class="tsep">·</span>
-    <span class="tick"><b>Phase 5</b> Generating insights</span><span class="tsep">·</span>
-    <span class="tick"><b>Brampton Parks Dept</b> outreach planned</span><span class="tsep">·</span>
-    <span class="tick"><b>11</b> parks surveyed</span><span class="tsep">·</span>
-    <span class="tick"><b>8</b> score categories · 12.5 pts each</span><span class="tsep">·</span>
-    <span class="tick">Litter · Bins · Grass · Benches · Playground · Graffiti · Washrooms</span><span class="tsep">·</span>
-    <span class="tick"><b>Apr–May 2026</b> field visits</span><span class="tsep">·</span>
-    <span class="tick"><b>Phase 5</b> Generating insights</span><span class="tsep">·</span>
-    <span class="tick"><b>Brampton Parks Dept</b> outreach planned</span><span class="tsep">·</span>
-  </div>
-</div>
-
-<div class="stats">
-  <div class="sc"><div class="sn">11</div><div class="sl">Parks Surveyed</div></div>
-  <div class="sc"><div class="sn">8</div><div class="sl">Score Categories</div></div>
-  <div class="sc"><div class="sn">7.9</div><div class="sl">Avg. Score</div></div>
-  <div class="sc"><div class="sn">5</div><div class="sl">Neighbourhoods</div></div>
-</div>
-
-<!-- MAP -->
-<div class="map-sec rv" id="map-sec">
-  <div class="ey">Park Cleanliness Map</div>
-  <div class="sh">Brampton — postal code zones</div>
-  <p class="sp2">Hover a zone to see it pop · Click to explore parks · Click a park pin for full breakdown</p>
-
-  <div class="map-layout">
-    <div class="map-wrap" style="position:relative">
-      <svg id="bmap" viewBox="0 0 500 520" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto">
-        <defs>
-          <filter id="emboss">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
-            <feOffset dx="0" dy="4" result="shadow"/>
-            <feFlood flood-color="rgba(0,0,0,0.25)" result="color"/>
-            <feComposite in="color" in2="shadow" operator="in" result="shadow2"/>
-            <feMerge><feMergeNode in="shadow2"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="emboss-hover">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
-            <feOffset dx="0" dy="8" result="shadow"/>
-            <feFlood flood-color="rgba(0,0,0,0.35)" result="color"/>
-            <feComposite in="color" in2="shadow" operator="in" result="shadow2"/>
-            <feMerge><feMergeNode in="shadow2"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <linearGradient id="g-l7a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a9e80"/><stop offset="100%" stop-color="#0d7060"/></linearGradient>
-          <linearGradient id="g-l6p" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2aab50"/><stop offset="100%" stop-color="#1a8038"/></linearGradient>
-          <linearGradient id="g-l6r" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1d8c7a"/><stop offset="100%" stop-color="#0f6355"/></linearGradient>
-          <linearGradient id="g-l6s" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3a9e60"/><stop offset="100%" stop-color="#286e44"/></linearGradient>
-          <linearGradient id="g-l6t" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0d7a60"/><stop offset="100%" stop-color="#085545"/></linearGradient>
-          <linearGradient id="g-l6v" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22b880"/><stop offset="100%" stop-color="#108858"/></linearGradient>
-          <linearGradient id="g-l6w" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#158870"/><stop offset="100%" stop-color="#0a5e50"/></linearGradient>
-          <linearGradient id="g-l6x" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0e9870"/><stop offset="100%" stop-color="#086850"/></linearGradient>
-          <linearGradient id="g-l6y" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#268a5a"/><stop offset="100%" stop-color="#1a6040"/></linearGradient>
-          <linearGradient id="g-l6z" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a7060"/><stop offset="100%" stop-color="#104848"/></linearGradient>
-        </defs>
-
-        <!-- Background -->
-        <rect width="500" height="520" fill="#c8ddd6" rx="0"/>
-        <!-- Subtle grid -->
-        <line x1="0" y1="260" x2="500" y2="260" stroke="rgba(255,255,255,.25)" stroke-width=".5"/>
-        <line x1="250" y1="0" x2="250" y2="520" stroke="rgba(255,255,255,.25)" stroke-width=".5"/>
-
-        <!-- 
-          BRAMPTON POSTAL ZONES - Approximate shapes based on real geography
-          L7A: NW Brampton (Mount Pleasant, Northwest Brampton)
-          L6P: North Brampton (Sandalwood)
-          L6R: NW (Heart Lake, Springdale)  
-          L6S: NE Brampton (Bramalea North)
-          L6T: East/Bramalea
-          L6V: East Central
-          L6W: Downtown / South
-          L6X: West Central (Fletchers Creek)
-          L6Y: SW (Brampton South)
-          L6Z: SE (Airport Road area)
-        -->
-
-        <!-- L7A - NW, Mount Pleasant -->
-        <path id="z-L7A" class="z-path" d="M20 20 L170 20 L185 90 L165 160 L80 175 L20 160 Z"
-          fill="url(#g-l7a)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L7A')" filter="url(#emboss)"/>
-        <text x="95" y="88" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="16" fill="white" opacity=".95" pointer-events="none">L7A</text>
-        <text x="95" y="105" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">Northwest Brampton</text>
-        <text x="95" y="118" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.6)" pointer-events="none">Mount Pleasant</text>
-
-        <!-- L6R - NW, Springdale / Heart Lake -->
-        <path id="z-L6R" class="z-path" d="M170 20 L260 20 L265 95 L185 90 Z"
-          fill="url(#g-l6r)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6R')" filter="url(#emboss)"/>
-        <text x="212" y="56" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="13" fill="white" opacity=".95" pointer-events="none">L6R</text>
-        <text x="212" y="70" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.65)" pointer-events="none">Springdale</text>
-
-        <!-- L6P - North, Sandalwood -->
-        <path id="z-L6P" class="z-path" d="M260 20 L390 20 L395 100 L310 105 L265 95 Z"
-          fill="url(#g-l6p)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6P')" filter="url(#emboss)"/>
-        <text x="325" y="60" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="14" fill="white" opacity=".95" pointer-events="none">L6P</text>
-        <text x="325" y="75" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">North Brampton</text>
-        <text x="325" y="87" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.6)" pointer-events="none">Sandalwood</text>
-
-        <!-- L6S - NE, Bramalea North -->
-        <path id="z-L6S" class="z-path" d="M390 20 L480 20 L480 140 L400 145 L395 100 Z"
-          fill="url(#g-l6s)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6S')" filter="url(#emboss)"/>
-        <text x="437" y="82" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="13" fill="white" opacity=".95" pointer-events="none">L6S</text>
-        <text x="437" y="96" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.65)" pointer-events="none">Bramalea N.</text>
-
-        <!-- L6X - West Central, Fletchers Creek -->
-        <path id="z-L6X" class="z-path" d="M20 160 L80 175 L165 160 L170 250 L90 270 L20 255 Z"
-          fill="url(#g-l6x)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6X')" filter="url(#emboss)"/>
-        <text x="93" y="213" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="14" fill="white" opacity=".95" pointer-events="none">L6X</text>
-        <text x="93" y="229" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">West Central</text>
-        <text x="93" y="241" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.6)" pointer-events="none">Fletchers Creek</text>
-
-        <!-- Central zone L6V (east, Brampton East) -->
-        <path id="z-L6V" class="z-path" d="M265 95 L310 105 L395 100 L400 145 L420 230 L320 245 L235 235 L240 160 Z"
-          fill="url(#g-l6v)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6V')" filter="url(#emboss)"/>
-        <text x="332" y="170" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="15" fill="white" opacity=".95" pointer-events="none">L6V</text>
-        <text x="332" y="187" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">Central Brampton</text>
-        <text x="332" y="199" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.6)" pointer-events="none">Brampton East</text>
-
-        <!-- L6T - Bramalea East -->
-        <path id="z-L6T" class="z-path" d="M400 145 L480 140 L480 260 L420 265 L420 230 Z"
-          fill="url(#g-l6t)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6T')" filter="url(#emboss)"/>
-        <text x="450" y="198" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="13" fill="white" opacity=".95" pointer-events="none">L6T</text>
-        <text x="450" y="212" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.65)" pointer-events="none">Bramalea E.</text>
-
-        <!-- L6W - Downtown / South Central -->
-        <path id="z-L6W" class="z-path" d="M170 250 L235 235 L240 160 L185 90 L165 160 Z"
-          fill="url(#g-l6w)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6W')" filter="url(#emboss)"/>
-        <text x="206" y="185" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="13" fill="white" opacity=".95" pointer-events="none">L6W</text>
-        <text x="206" y="199" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.65)" pointer-events="none">Downtown</text>
-
-        <!-- L6Y - SW -->
-        <path id="z-L6Y" class="z-path" d="M20 255 L90 270 L170 250 L180 340 L100 365 L20 355 Z"
-          fill="url(#g-l6y)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6Y')" filter="url(#emboss)"/>
-        <text x="98" y="307" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="14" fill="white" opacity=".95" pointer-events="none">L6Y</text>
-        <text x="98" y="323" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">Brampton South</text>
-
-        <!-- L6Z - SE (Airport Rd area) -->
-        <path id="z-L6Z" class="z-path" d="M235 235 L320 245 L420 230 L420 265 L480 260 L480 380 L355 400 L230 380 L235 310 Z"
-          fill="url(#g-l6z)" stroke="white" stroke-width="2" stroke-linejoin="round"
-          onclick="selectZone('L6Z')" filter="url(#emboss)"/>
-        <text x="355" y="310" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="800" font-size="14" fill="white" opacity=".95" pointer-events="none">L6Z</text>
-        <text x="355" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" pointer-events="none">Southeast</text>
-        <text x="355" y="339" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(255,255,255,.6)" pointer-events="none">Airport Road</text>
-
-        <!-- Bottom strip -->
-        <path id="z-BOT" class="z-path" d="M20 355 L100 365 L180 340 L230 380 L355 400 L480 380 L480 500 L20 500 Z"
-          fill="#0a7060" stroke="white" stroke-width="2" stroke-linejoin="round" opacity=".6"/>
-
-        <!-- Park pins -->
-        <!-- L6X zone: Andrew McCandless Park (450 Elbern Markell Dr) -->
-        <g class="p-dot" id="pd-Andrew" onclick="selectPark('Andrew McCandless Park')">
-          <circle class="p-circle" cx="75" cy="202" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
-          <circle cx="75" cy="202" r="2.5" fill="#f59e0b"/>
-          <rect class="p-label-bg" x="82" y="194" width="130" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="147" y="205" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Andrew McCandless (6.9)</text>
-        </g>
-
-        <!-- L7A: Tillacountry Park (150 Robert Parkinson Dr) -->
-        <g class="p-dot" id="pd-Tillacountry" onclick="selectPark('Tillacountry Park')">
-          <circle class="p-circle" cx="88" cy="85" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
-          <circle cx="88" cy="85" r="2.5" fill="#3aab3a"/>
-          <rect class="p-label-bg" x="96" y="77" width="120" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="156" y="88" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Tillacountry (7.8)</text>
-        </g>
-
-        <!-- L7A: Moody Family Park (40 Robert Parkinson Dr) -->
-        <g class="p-dot" id="pd-Moody" onclick="selectPark('Moody Family Park')">
-          <circle class="p-circle" cx="122" cy="72" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
-          <circle cx="122" cy="72" r="2.5" fill="#3aab3a"/>
-          <rect class="p-label-bg" x="130" y="64" width="110" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="185" y="75" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Moody Family (8.0)</text>
-        </g>
-
-        <!-- L7A: Lola Park (Brampton ON L7A 0A8) -->
-        <g class="p-dot" id="pd-Lola" onclick="selectPark('Lola Park')">
-          <circle class="p-circle" cx="55" cy="120" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
-          <circle cx="55" cy="120" r="2.5" fill="#f59e0b"/>
-          <rect class="p-label-bg" x="63" y="112" width="85" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="105" y="123" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Lola Park (7.7)</text>
-        </g>
-
-        <!-- L7A: Angus Morrison Park (55 Aylesbury Dr) -->
-        <g class="p-dot" id="pd-Angus" onclick="selectPark('Angus Morrison Park')">
-          <circle class="p-circle" cx="148" cy="110" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
-          <circle cx="148" cy="110" r="2.5" fill="#f59e0b"/>
-          <rect class="p-label-bg" x="156" y="102" width="120" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="216" y="113" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Angus Morrison (7.8)</text>
-        </g>
-
-        <!-- L6P: Andrew McCandless Park NOTE - actually in L6X based on search (Elbern Markell Dr L6X) -->
-        <!-- L6P: Ahmadiyya Park (340 Remembrance Rd) -->
-        <g class="p-dot" id="pd-Ahmadiyya" onclick="selectPark('Ahmadiyya Park')">
-          <circle class="p-circle" cx="305" cy="60" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
-          <circle cx="305" cy="60" r="2.5" fill="#3aab3a"/>
-          <rect class="p-label-bg" x="313" y="52" width="115" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="370" y="63" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Ahmadiyya (8.0)</text>
-        </g>
-
-        <!-- L6V: Creditview Sandalwood Park (10510 Creditview Rd) -->
-        <g class="p-dot" id="pd-Creditview" onclick="selectPark('Creditview Sandalwood Park')">
-          <circle class="p-circle" cx="278" cy="138" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
-          <circle cx="278" cy="138" r="2.5" fill="#3aab3a"/>
-          <rect class="p-label-bg" x="200" y="130" width="140" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="270" y="141" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Creditview Sandalwood (8.3)</text>
-        </g>
-
-        <!-- L6X: Worthington Park (75-89 Worthington Ave) -->
-        <g class="p-dot" id="pd-Worthington" onclick="selectPark('Worthington Park')">
-          <circle class="p-circle" cx="108" cy="230" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
-          <circle cx="108" cy="230" r="2.5" fill="#f59e0b"/>
-          <rect class="p-label-bg" x="116" y="222" width="118" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="175" y="233" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Worthington (7.3)</text>
-        </g>
-
-        <!-- L6V: Burnt Elm Park (45 Burnt Elm Dr) -->
-        <g class="p-dot" id="pd-BurntElm" onclick="selectPark('Burnt Elm Park')">
-          <circle class="p-circle" cx="375" cy="185" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
-          <circle cx="375" cy="185" r="2.5" fill="#3aab3a"/>
-          <rect class="p-label-bg" x="295" y="177" width="112" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="351" y="188" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Burnt Elm (8.0)</text>
-        </g>
-
-        <!-- L7A: Fiddlers Parkette (13 Fiddlers Green Dr) -->
-        <g class="p-dot" id="pd-Fiddlers" onclick="selectPark('Fiddlers Parkette')">
-          <circle class="p-circle" cx="152" cy="140" r="5.5" fill="white" stroke="#f59e0b" stroke-width="2.5" opacity=".95"/>
-          <circle cx="152" cy="140" r="2.5" fill="#f59e0b"/>
-          <rect class="p-label-bg" x="160" y="132" width="112" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="216" y="143" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Fiddlers Parkette (7.8)</text>
-        </g>
-
-        <!-- L6V: Trincomalee Park (60 Iguana Trail) -->
-        <g class="p-dot" id="pd-Trincomalee" onclick="selectPark('Trincomalee Park')">
-          <circle class="p-circle" cx="345" cy="215" r="5.5" fill="white" stroke="#3aab3a" stroke-width="2.5" opacity=".95"/>
-          <circle cx="345" cy="215" r="2.5" fill="#3aab3a"/>
-          <rect class="p-label-bg" x="263" y="207" width="115" height="16" rx="4" fill="rgba(13,33,68,.88)" opacity="0"/>
-          <text class="p-label-txt" x="320" y="218" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="white" opacity="0">Trincomalee (8.0)</text>
-        </g>
-
-        <!-- Map title -->
-        <rect x="16" y="14" width="170" height="22" rx="5" fill="rgba(255,255,255,.85)"/>
-        <text x="26" y="29" font-family="Space Grotesk,sans-serif" font-weight="700" font-size="11" fill="#0d2144">Brampton Postal Code Zones</text>
-      </svg>
-
-      <!-- Legend -->
-      <div class="map-leg-wrap">
-        <div class="lr"><div class="ld" style="background:#3aab3a"></div>Score 8.0+</div>
-        <div class="lr"><div class="ld" style="background:#f59e0b"></div>Score 7.0–7.9</div>
-        <div class="lr"><div class="ld" style="background:#ef4444"></div>Score below 7.0</div>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand" aria-label="CiviqPulse">
+        <img class="brand-icon" src="CiviqPulse_logo_icon.png" alt="CiviqPulse logo icon">
+        <img class="brand-wordmark" src="CiviqPulse_text_tagline.png" alt="CiviqPulse - Turning data into community impact.">
       </div>
-    </div>
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="active" href="#overview" data-nav="overview">Overview</a>
+        <a href="#rankings" data-nav="rankings">Rankings</a>
+        <a href="#plan" data-nav="plan">Research Plan</a>
+        <a href="#about" data-nav="about">About Us</a>
+      </nav>
+    </header>
 
-    <!-- RIGHT PANEL -->
-    <div class="map-panel" id="map-panel">
-      <div class="mp-hint" id="mp-hint">
-        <div class="mp-ico">&#127774;</div>
-        <div class="mp-ht">Click a postal zone or pin</div>
-        Select a neighbourhood zone on the map to see its parks, or click a park pin directly.
-      </div>
-      <div class="mp-content" id="mp-content">
-        <div class="mp-header">
-          <div class="mp-zn" id="mp-zn"></div>
-          <div class="mp-zs" id="mp-zs"></div>
+    <main>
+      <div class="view" id="researchView">
+      <section class="hero" id="overview">
+        <div class="hero-inner">
+          <div class="kicker">Active research - 2025-2026</div>
+          <h1>Turning <span class="accent">community data</span><br>into real change.</h1>
+          <p class="hero-copy">
+            CiviqPulse is a youth-led analytics initiative identifying what is broken in our city and backing it up with data.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#map" data-nav="map">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg>
+              Explore Park Data
+            </a>
+            <a class="btn secondary" href="#plan" data-nav="plan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+              Research Plan
+            </a>
+          </div>
+          <div class="notice" id="loadNotice"></div>
         </div>
-        <div id="mp-parks"></div>
+      </section>
+
+      <section id="projects">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Active investigations</div>
+            <h2>Research project portfolio</h2>
+            <p>Select a project to view its dashboard. Brampton Parks Cleanliness Analytics is live; the other investigations will be ready for future datasets.</p>
+          </div>
+        </div>
+        <div class="project-cards" id="projectCards">
+          <button class="project-card active" data-project="parks">
+            <span class="project-badge">Current project</span>
+            <h3>Brampton Parks Cleanliness Analytics</h3>
+            <p>Rating Brampton parks across maintenance, amenities, and visible cleanliness factors by postal-code zone.</p>
+            <div class="project-meta"><span class="project-badge">2025-2026</span><span class="project-badge">Active</span><span class="project-badge" id="cardParkCount">-- parks</span></div>
+          </button>
+          <button class="project-card" data-project="employment" disabled aria-disabled="true">
+            <span class="project-badge">Future Project</span>
+            <h3>Youth Employment Dashboard</h3>
+            <p>Mapping youth employment patterns, opportunity gaps, and training access across Brampton neighbourhoods.</p>
+            <div class="project-meta"><span class="project-badge">Project 2</span><span class="project-badge">Coming soon</span></div>
+          </button>
+          <button class="project-card" data-project="food" disabled aria-disabled="true">
+            <span class="project-badge">Future Project</span>
+            <h3>Food Accessibility Analysis</h3>
+            <p>Studying access to affordable grocery options, community food supports, and transit-linked service gaps.</p>
+            <div class="project-meta"><span class="project-badge">Project 3</span><span class="project-badge">Coming soon</span></div>
+          </button>
+          <button class="project-card" data-project="walkability" disabled aria-disabled="true">
+            <span class="project-badge">Future Project</span>
+            <h3>Brampton Walkability Index</h3>
+            <p>Comparing pedestrian comfort, intersection safety, school access, and neighbourhood walking conditions.</p>
+            <div class="project-meta"><span class="project-badge">Project 4</span><span class="project-badge">Coming soon</span></div>
+          </button>
+        </div>
+      </section>
+
+      <section id="snapshot" class="project-data">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Project snapshot</div>
+            <h2 id="snapshotTitle">Brampton Parks Cleanliness Analytics</h2>
+            <p id="snapshotCopy">A quick view of the active project scope, data coverage, and current research status.</p>
+          </div>
+        </div>
+        <div class="snapshot-strip">
+          <div class="snapshot-cell"><div><strong id="statParks">--</strong><span>Parks surveyed</span></div></div>
+          <div class="snapshot-cell"><div><strong>8</strong><span>Score categories</span></div></div>
+          <div class="snapshot-cell"><div><strong id="statAverage">--</strong><span>Avg. score</span></div></div>
+          <div class="snapshot-cell"><div><strong id="statZones">--</strong><span>Postal zones</span></div></div>
+        </div>
+      </section>
+
+      <section class="project-placeholder" id="projectPlaceholder" hidden>
+        <div class="section-head">
+          <div>
+            <div class="kicker">Project workspace</div>
+            <h2 id="placeholderTitle">Future investigation</h2>
+            <p id="placeholderCopy">This project card is ready for the next dataset. Add the relevant project files and the same dashboard structure can be connected to new research.</p>
+          </div>
+        </div>
+        <div class="grid-4">
+          <article class="evidence"><span class="tag">Status</span><h3>Placeholder</h3><p>Project scope is reserved for a future CiviqPulse investigation.</p></article>
+          <article class="evidence"><span class="tag">Data</span><h3>Dataset pending</h3><p>Once the dataset is available, metrics and rankings can render automatically.</p></article>
+          <article class="evidence"><span class="tag">Method</span><h3>Reusable framework</h3><p>The same evidence, snapshot, and reporting pattern will support the next project.</p></article>
+          <article class="evidence"><span class="tag">Output</span><h3>Dashboard ready</h3><p>The interface is structured to show project-specific insights after selection.</p></article>
+        </div>
+      </section>
+
+      <div class="project-data" id="parkDataView">
+      <section id="map">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Interactive research map</div>
+            <h2>Park ratings by Brampton postal zone</h2>
+            <p>Park pins are grouped by postal-code zone and colored by final rating. Click a zone or park to inspect the evidence behind the score.</p>
+          </div>
+          <div class="toolbar">
+            <select id="ratingSelect" aria-label="Filter by rating">
+              <option value="all">All ratings</option>
+              <option value="excellent">Excellent: 9+</option>
+              <option value="strong">Strong: 8 to 8.9</option>
+              <option value="watch">Watch list: below 8</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="map-layout">
+          <div class="map-shell" id="mapShell" aria-label="Brampton postal-zone park map">
+            <div class="map-stage" id="mapStage">
+              <svg class="zone-svg" viewBox="0 0 900 620" aria-hidden="true">
+                <defs>
+                  <linearGradient id="zoneA" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0b3767"/><stop offset="1" stop-color="#007f8c"/></linearGradient>
+                  <linearGradient id="zoneB" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#007f8c"/><stop offset="1" stop-color="#2f8f2f"/></linearGradient>
+                  <linearGradient id="zoneC" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#1a6f5a"/><stop offset="1" stop-color="#63b23b"/></linearGradient>
+                </defs>
+                <path class="zone-shape" data-zone="L7A" fill="url(#zoneA)" d="M86 80 L255 44 L330 82 L318 215 L230 246 L94 226 L48 148 Z"></path>
+                <path class="zone-shape" data-zone="L6P" fill="url(#zoneB)" d="M332 72 L522 42 L617 92 L592 202 L472 232 L318 215 Z"></path>
+                <path class="zone-shape" data-zone="L6R" fill="url(#zoneC)" d="M604 90 L792 124 L842 234 L746 312 L588 206 Z"></path>
+                <path class="zone-shape" data-zone="L6X" fill="url(#zoneB)" d="M96 230 L232 250 L316 218 L338 350 L252 424 L112 406 L54 314 Z"></path>
+                <path class="zone-shape" data-zone="L6V" fill="url(#zoneA)" d="M320 222 L472 238 L588 210 L622 332 L526 420 L350 354 Z"></path>
+                <path class="zone-shape" data-zone="L6S" fill="url(#zoneB)" d="M592 214 L746 316 L824 250 L846 388 L742 476 L624 336 Z"></path>
+                <path class="zone-shape" data-zone="L6Y" fill="url(#zoneC)" d="M108 412 L252 430 L348 360 L378 506 L302 586 L150 548 L64 476 Z"></path>
+                <path class="zone-shape" data-zone="L6W" fill="url(#zoneA)" d="M352 364 L526 426 L500 564 L382 506 Z"></path>
+                <path class="zone-shape" data-zone="L6T" fill="url(#zoneC)" d="M526 426 L624 342 L742 480 L666 574 L502 566 Z"></path>
+                <path class="zone-shape" data-zone="L6Z" fill="url(#zoneB)" d="M744 482 L846 394 L862 524 L792 594 L668 578 Z"></path>
+
+                <g text-anchor="middle">
+                  <text class="zone-label" x="182" y="147">L7A</text><text class="zone-label-sub" x="182" y="167">Northwest</text>
+                  <text class="zone-label" x="464" y="142">L6P</text><text class="zone-label-sub" x="464" y="162">North</text>
+                  <text class="zone-label" x="722" y="216">L6R</text><text class="zone-label-sub" x="722" y="236">Springdale</text>
+                  <text class="zone-label" x="198" y="334">L6X</text><text class="zone-label-sub" x="198" y="354">West Central</text>
+                  <text class="zone-label" x="470" y="324">L6V</text><text class="zone-label-sub" x="470" y="344">Central</text>
+                  <text class="zone-label" x="730" y="382">L6S</text><text class="zone-label-sub" x="730" y="402">Bramalea North</text>
+                  <text class="zone-label" x="220" y="500">L6Y</text><text class="zone-label-sub" x="220" y="520">Southwest</text>
+                  <text class="zone-label" x="450" y="490">L6W</text><text class="zone-label-sub" x="450" y="510">Downtown</text>
+                  <text class="zone-label" x="610" y="500">L6T</text><text class="zone-label-sub" x="610" y="520">Bramalea East</text>
+                  <text class="zone-label" x="772" y="536">L6Z</text><text class="zone-label-sub" x="772" y="556">Southeast</text>
+                </g>
+              </svg>
+              <div class="pin-layer" id="pinLayer"></div>
+            </div>
+            <div class="map-controls">
+              <button class="icon-btn" id="zoomIn" aria-label="Zoom in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+              <button class="icon-btn" id="zoomOut" aria-label="Zoom out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></button>
+              <button class="icon-btn" id="resetMap" aria-label="Reset map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg></button>
+            </div>
+            <div class="legend" aria-label="Rating color legend">
+              <div class="legend-row"><span class="swatch" style="--swatch: var(--green)"></span>9.0+ excellent</div>
+              <div class="legend-row"><span class="swatch" style="--swatch: var(--teal)"></span>8.0 to 8.9 strong</div>
+              <div class="legend-row"><span class="swatch" style="--swatch: var(--amber)"></span>below 8 watch list</div>
+            </div>
+            <div class="popover" id="popover"></div>
+          </div>
+
+          <aside class="panel" aria-label="Park list">
+            <div class="panel-head">
+              <h3 id="panelTitle">All surveyed parks</h3>
+              <p id="panelSummary">Loading project data...</p>
+            </div>
+            <div class="zone-strip" id="zoneStrip"></div>
+            <div class="park-list" id="parkList"></div>
+          </aside>
+        </div>
+
+        <div class="detail" id="detail">
+          <div class="module pad">
+            <div class="selected-title">
+              <div>
+                <h3 id="detailName">Select a park</h3>
+                <div class="address" id="detailAddress">The selected park profile will appear here.</div>
+              </div>
+              <div class="big-score" id="detailScore" style="--score-color: var(--teal)"><span>Rating</span><strong>--</strong></div>
+            </div>
+            <div class="metric-strip">
+              <div class="mini"><strong id="detailZone">--</strong><span>Postal zone</span></div>
+              <div class="mini"><strong id="detailLowest">--</strong><span>Lowest factor</span></div>
+              <div class="mini"><strong id="detailDate">--</strong><span>Check-in date</span></div>
+            </div>
+            <div class="bars" id="factorBars"></div>
+          </div>
+          <div class="module pad">
+            <div class="selected-title">
+              <div>
+                <h3>Field notes</h3>
+                <div class="address">Observations imported from the project dataset.</div>
+              </div>
+            </div>
+            <ul class="thoughts" id="thoughtList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="evidence">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Method and evidence</div>
+            <h2>Research highlights</h2>
+            <p>These highlights come from the project plan, the park-rating rubric, and the check-in records. Future projects can use the same structure with new datasets and assets.</p>
+          </div>
+        </div>
+        <div class="grid-4">
+          <article class="evidence">
+            <span class="tag">Questionnaire</span>
+            <h3>8-factor rating rubric</h3>
+            <p>Litter, garbage bins, landscaping, walking paths, benches, playgrounds, vandalism, and washrooms are scored consistently for every park.</p>
+            <a class="evidence-link" href="CiviqPulse%20Park%20User%20Questionnaire.pdf" target="_blank" rel="noopener">Open questionnaire</a>
+          </article>
+          <article class="evidence">
+            <span class="tag">Field work</span>
+            <h3 id="evidenceDates">April to June 2026</h3>
+            <p id="evidenceVisits">Check-ins capture visit dates so the ratings can be reviewed against the research timeline.</p>
+          </article>
+          <article class="evidence">
+            <span class="tag">Coverage</span>
+            <h3 id="evidenceCoverage">10 postal zones</h3>
+            <p id="evidenceCoverageText">The project compares parks across Brampton instead of focusing only on a single neighbourhood.</p>
+          </article>
+          <article class="evidence">
+            <span class="tag">Impact plan</span>
+            <h3>Stakeholder outreach</h3>
+            <p>The project plan targets City of Brampton Parks, local councillors, and community associations, with responses tracked as the project matures.</p>
+          </article>
+        </div>
+      </section>
+
       </div>
-    </div>
-  </div>
-
-  <!-- DETAIL CARD -->
-  <div class="pdc" id="pdc">
-    <div class="pdc-head">
-      <div class="pdc-name">
-        <span id="pdc-park-name"></span>
-        <span class="pdc-sco" id="pdc-sco"></span>
       </div>
-      <button class="pdc-x" onclick="closePDC()">&#10005;</button>
-    </div>
-    <div class="pdc-body">
-      <div class="kpis" id="pdc-kpis"></div>
-      <div class="cat-section">
-        <div class="cat-title">Category breakdown</div>
-        <div id="pdc-cats"></div>
+
+      <section id="plan" class="view" hidden>
+        <div class="section-head">
+          <div>
+            <div class="kicker">Project framework</div>
+            <h2>CiviqPulse project plan</h2>
+            <p>The website is structured for a portfolio of research projects: Brampton parks cleanliness now, followed by youth employment, food accessibility, and walkability analysis.</p>
+          </div>
+        </div>
+        <div class="projects">
+          <div class="timeline" id="timeline"></div>
+          <div class="module pad">
+            <div class="selected-title">
+              <div>
+                <h3>Next-project ready</h3>
+                <div class="address">The data loading is controlled by a project configuration in JavaScript. Add the next project files and update the config without redesigning the site.</div>
+              </div>
+            </div>
+            <div class="metric-strip">
+              <div class="mini"><strong>1</strong><span>Active project</span></div>
+              <div class="mini"><strong>3</strong><span>Queued topics</span></div>
+              <div class="mini"><strong>Data</strong><span>Source files</span></div>
+            </div>
+            <ul class="thoughts">
+              <li>Youth Employment Dashboard</li>
+              <li>Food Accessibility Analysis</li>
+              <li>Brampton Walkability Index</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="rankings" class="view" hidden>
+        <div class="section-head">
+          <div>
+            <div class="kicker">Ranked dataset</div>
+            <h2>Top parks and watch-list signals</h2>
+            <p>The table is generated from the current project data, including merged check-in dates where available.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Park</th>
+                <th>Zone</th>
+                <th>Rating</th>
+                <th>Check-in</th>
+                <th>Lowest factor</th>
+                <th>Address</th>
+              </tr>
+            </thead>
+            <tbody id="rankingBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="about" class="view" hidden>
+        <div class="section-head">
+          <div>
+            <div class="kicker">About CiviqPulse</div>
+            <h2>Youth-led research for clearer civic decisions</h2>
+            <p>CiviqPulse turns local observations, resident feedback, and structured field data into practical dashboards that help communities understand where attention is needed most.</p>
+          </div>
+        </div>
+        <div class="grid-4">
+          <article class="evidence">
+            <span class="tag">Mission</span>
+            <h3>Data with purpose</h3>
+            <p>We study everyday civic issues and organize findings into evidence that students, residents, and decision-makers can understand quickly.</p>
+          </article>
+          <article class="evidence">
+            <span class="tag">Current focus</span>
+            <h3>Brampton parks</h3>
+            <p>The active project reviews park cleanliness across postal-code zones using field visits, a consistent rating rubric, and check-in records.</p>
+          </article>
+          <article class="evidence">
+            <span class="tag">Method</span>
+            <h3>Repeatable research</h3>
+            <p>Each project is designed so new topics can reuse the same structure: question, dataset, field evidence, analysis, dashboard, and outreach.</p>
+          </article>
+          <article class="evidence">
+            <span class="tag">Student work</span>
+            <h3>Built to grow</h3>
+            <p>This portfolio supports the current Grade 11 research project and is prepared for future investigations such as employment, food access, and walkability.</p>
+          </article>
+        </div>
+        <div class="projects about-details">
+          <div class="module pad">
+            <div class="selected-title">
+              <div>
+                <h3>How we work</h3>
+                <div class="address">CiviqPulse starts with a civic question, collects local evidence, and presents the findings in a clear dashboard.</div>
+              </div>
+            </div>
+            <ul class="thoughts">
+              <li>Use consistent rubrics so locations can be compared fairly.</li>
+              <li>Keep data in source files so updates do not require rebuilding the website.</li>
+              <li>Highlight the method and evidence behind each conclusion.</li>
+              <li>Share results in a format that supports discussion and follow-up.</li>
+            </ul>
+          </div>
+          <div class="module pad">
+            <div class="selected-title">
+              <div>
+                <h3>Contact for queries</h3>
+                <div class="address">For questions about the research, data, dashboard, or future collaboration, contact CiviqPulse through email or Instagram.</div>
+              </div>
+            </div>
+            <div class="metric-strip">
+              <div class="mini"><strong>Email</strong><span>Primary contact</span></div>
+              <div class="mini"><strong>Instagram</strong><span>Updates</span></div>
+              <div class="mini"><strong>Brampton</strong><span>Research area</span></div>
+            </div>
+            <ul class="thoughts">
+              <li><a href="mailto:civiqpulse@gmail.com">civiqpulse@gmail.com</a></li>
+              <li><a href="https://instagram.com/civiqpulse" target="_blank" rel="noopener">@civiqpulse</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">
+        <span>CiviqPulse</span>
       </div>
-      <div class="tbox"><div class="tt">Field observations</div><div class="tb" id="pdc-thoughts"></div></div>
-    </div>
-  </div>
-</div>
-
-<div style="border-top:1px solid #e2e8f0" class="rv">
-<div class="sec">
-  <div class="ey">Research Projects</div>
-  <div class="sh">Active investigations</div>
-  <div class="proj-grid">
-    <div class="proj-card">
-      <div class="pcs"></div>
-      <div class="pch"><div class="pci ig">&#127795;</div><span class="tag tl">Live</span></div>
-      <div class="pcb">
-        <div class="pct">Park Cleanliness Analytics</div>
-        <div class="pcd">Rating Brampton parks across 8 categories to identify maintenance gaps and push for better resource allocation.</div>
-        <div class="pcm"><span class="pm">&#128197; 2025–2026</span><span class="pm">&#9889; Phase 5</span><span class="pm">11 parks</span></div>
+      <div class="footer-contact">
+        <a href="https://instagram.com/civiqpulse" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          @civiqpulse
+        </a>
+        <a href="mailto:civiqpulse@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          civiqpulse@gmail.com
+        </a>
       </div>
-    </div>
-    <div class="proj-card dim">
-      <div class="pcs"></div>
-      <div class="pch"><div class="pci id">&#128188;</div><span class="tag ts2">Coming Soon</span></div>
-      <div class="pcb">
-        <div class="pct">Youth Employment Dashboard</div>
-        <div class="pcd">Mapping youth employment patterns and gaps across Brampton neighbourhoods.</div>
-        <div class="pcm"><span class="pm">&#128197; Project 2 · TBA</span></div>
+      <div class="footer-links">
+        <a href="#overview" data-nav="overview">Overview</a>
+        <a href="#rankings" data-nav="rankings">Rankings</a>
+        <a href="#plan" data-nav="plan">Research Plan</a>
+        <a href="#about" data-nav="about">About Us</a>
       </div>
-    </div>
+    </footer>
   </div>
-</div>
-</div>
 
-<div style="border-top:1px solid #e2e8f0;padding:3rem 2rem;background:#fff" class="rv">
-  <div class="ey">The Initiative</div>
-  <div class="sh" style="margin-bottom:1.3rem">What CiviqPulse is about</div>
-  <div class="ag">
-    <div class="ac"><div class="ai">&#127919;</div><div class="at">Mission</div><div class="ad">Use data analytics to identify community challenges in Brampton and provide evidence-based recommendations that improve public spaces.</div></div>
-    <div class="ac"><div class="ai">&#128065;&#65039;</div><div class="at">Vision</div><div class="ad">A youth-led initiative helping residents, community groups, and local government make better decisions using data.</div></div>
-    <div class="ac"><div class="ai">&#128194;</div><div class="at">Open data</div><div class="ad">All datasets, reports, and dashboards published openly so anyone can verify, challenge, or build on the findings.</div></div>
-    <div class="ac"><div class="ai">&#127942;</div><div class="at">Community impact</div><div class="ad">Findings shared with City of Brampton, local councillors, and community associations to push for real change.</div></div>
-  </div>
-</div>
+  <script>
+    const PROJECT = {
+      ratingsCsv: "Brampton%20Park%20-%20Research%20Ratings.csv",
+      checkinsCsv: "Brampton%20Park%20-%20Check-Ins.csv"
+    };
 
-<div class="cbar">
-  <div><div class="ct-t">Get in touch</div><div class="ct-s">Follow our research or reach out directly</div></div>
-  <div class="ct-links">
-    <a class="cb cb-ig" href="https://instagram.com/civiqpulse" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>@civiqpulse</a>
-    <a class="cb cb-em" href="mailto:civiqpulse@gmail.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>civiqpulse@gmail.com</a>
-  </div>
-</div>
-<footer class="footer">
-  <div class="fl">
-    <svg width="20" height="22" viewBox="0 0 46 50" xmlns="http://www.w3.org/2000/svg"><path d="M23 2C14.7 2 8 8.7 8 17c0 9.5 15 31 15 31S38 26.5 38 17C38 8.7 31.3 2 23 2z" fill="white" opacity=".3"/><path d="M23 2C14.7 2 8 8.7 8 17c0 9.5 15 31 15 31S38 26.5 38 17C38 8.7 31.3 2 23 2z" fill="#0a8a7a" opacity=".7"/></svg>
-    CiviqPulse
-  </div>
-  <div class="fr"><a onclick="showPage('plan')">Research Plan</a><a onclick="showPage('about')">About</a></div>
-</footer>
-</div>
+    const PROJECT_META = {
+      parks: {
+        title: "Brampton Parks Cleanliness Analytics",
+        copy: "A quick view of the active project scope, data coverage, and current research status."
+      },
+      employment: {
+        title: "Youth Employment Dashboard",
+        copy: "This future investigation will map youth employment patterns, opportunity gaps, and training access across Brampton."
+      },
+      food: {
+        title: "Food Accessibility Analysis",
+        copy: "This future investigation will study grocery access, community food supports, affordability, and transit-linked service gaps."
+      },
+      walkability: {
+        title: "Brampton Walkability Index",
+        copy: "This future investigation will compare pedestrian comfort, school access, intersections, and neighbourhood walking conditions."
+      }
+    };
 
-<!-- PLAN -->
-<div class="page" id="page-plan">
-<div class="rp-hero">
-  <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.4);margin-bottom:8px;font-weight:700;position:relative">Methodology</div>
-  <h1>Park Cleanliness Analytics Research Plan</h1>
-  <p>10-phase execution from scope definition to community impact.</p>
-</div>
-<div class="rp-body">
-  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#0a8a7a;margin-bottom:1rem">Success metrics</div>
-  <div class="mg">
-    <div class="mc"><div class="mn">11</div><div class="ml">Parks surveyed</div></div>
-    <div class="mc"><div class="mn">30–50</div><div class="ml">Observations</div></div>
-    <div class="mc"><div class="mn">5–10</div><div class="ml">Stakeholder outreach</div></div>
-    <div class="mc"><div class="mn">1</div><div class="ml">Published report</div></div>
-    <div class="mc"><div class="mn">1</div><div class="ml">Live dashboard</div></div>
-  </div>
-  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#0a8a7a;margin-bottom:1rem">10-phase plan</div>
-  <div id="phase-list"></div>
-</div>
-<div class="cbar">
-  <div><div class="ct-t">Get in touch</div><div class="ct-s">Follow our research or reach out directly</div></div>
-  <div class="ct-links">
-    <a class="cb cb-ig" href="https://instagram.com/civiqpulse" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>@civiqpulse</a>
-    <a class="cb cb-em" href="mailto:civiqpulse@gmail.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>civiqpulse@gmail.com</a>
-  </div>
-</div>
-<footer class="footer"><div class="fl">CiviqPulse</div><div class="fr"><a onclick="showPage('home')">Home</a><a onclick="showPage('about')">About</a></div></footer>
-</div>
+    const ZONES = {
+      L7A: { name: "Northwest Brampton", center: [180, 150], radius: [115, 80] },
+      L6P: { name: "North Brampton", center: [455, 145], radius: [120, 76] },
+      L6R: { name: "Springdale", center: [720, 225], radius: [104, 80] },
+      L6X: { name: "West Central", center: [205, 335], radius: [112, 82] },
+      L6V: { name: "Central Brampton", center: [475, 324], radius: [126, 86] },
+      L6S: { name: "Bramalea North", center: [725, 385], radius: [96, 82] },
+      L6Y: { name: "Southwest Brampton", center: [220, 500], radius: [114, 72] },
+      L6W: { name: "Downtown Brampton", center: [450, 493], radius: [58, 70] },
+      L6T: { name: "Bramalea East", center: [612, 500], radius: [92, 68] },
+      L6Z: { name: "Southeast Brampton", center: [772, 536], radius: [70, 54] }
+    };
 
-<!-- ABOUT -->
-<div class="page" id="page-about">
-<div class="rp-hero">
-  <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.4);margin-bottom:8px;font-weight:700;position:relative">The Initiative</div>
-  <h1>About CiviqPulse</h1>
-  <p>A youth-led community analytics initiative using real data to drive real change in Brampton, Ontario.</p>
-</div>
-<div class="sec">
-  <div class="ag" style="margin-top:0">
-    <div class="ac"><div class="ai">&#127919;</div><div class="at">Mission</div><div class="ad">Use data analytics to identify community challenges in Brampton and provide evidence-based recommendations that improve public spaces and quality of life.</div></div>
-    <div class="ac"><div class="ai">&#128065;&#65039;</div><div class="at">Vision</div><div class="ad">A youth-led initiative helping residents, community organizations, and local government make better decisions using data.</div></div>
-    <div class="ac"><div class="ai">&#127942;</div><div class="at">Long-term goal</div><div class="ad">Portfolio of projects: Park Cleanliness, Youth Employment, Food Accessibility, and Walkability Index.</div></div>
-    <div class="ac"><div class="ai">&#128194;</div><div class="at">Open data</div><div class="ad">All datasets, reports, and dashboards published openly so anyone can verify, challenge, or build on the findings.</div></div>
-  </div>
-</div>
-<div class="cbar">
-  <div><div class="ct-t">Get in touch</div><div class="ct-s">Follow our research or reach out directly</div></div>
-  <div class="ct-links">
-    <a class="cb cb-ig" href="https://instagram.com/civiqpulse" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>@civiqpulse</a>
-    <a class="cb cb-em" href="mailto:civiqpulse@gmail.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>civiqpulse@gmail.com</a>
-  </div>
-</div>
-<footer class="footer"><div class="fl">CiviqPulse</div><div class="fr"><a onclick="showPage('home')">Home</a><a onclick="showPage('plan')">Research Plan</a></div></footer>
-</div>
+    const FACTORS = [
+      ["litter", "Litter on Ground"],
+      ["bins", "Garbage Bins"],
+      ["grass", "Grass & Landscaping"],
+      ["paths", "Walking Paths"],
+      ["benches", "Benches & Seating"],
+      ["playground", "Playground"],
+      ["graffiti", "Graffiti & Vandalism"],
+      ["washrooms", "Washrooms"]
+    ];
 
-<script>
-const PARKS={
-  'Andrew McCandless Park':{score:6.9,litter:7,bins:7,grass:8,benches:8,playground:9,graffiti:7,washrooms:2,date:'April 3, 2026',crowd:'High',zone:'L6X',address:'450 Elbern Markell Dr, Brampton, ON L6X',thoughts:'Washrooms in critical condition with severe plumbing failures and odors. Excellent modern multi-sport facilities: skatepark, cricket field, splash pad, and batting cage. Minimal graffiti around the skatepark. Asphalt loop paths are in near-flawless shape.'},
-  'Tillacountry Park':{score:7.8,litter:8,bins:8,grass:8,benches:7,playground:7,graffiti:9,washrooms:null,date:'April 6, 2026',crowd:'Low',zone:'L7A',address:'150 Robert Parkinson Dr, Brampton, ON L7A 0G3',thoughts:'No washrooms. Compact peaceful neighbourhood parkette in Northwest Brampton. Basic well-kept play areas. Excellent sightlines and low vandalism due to direct visibility from surrounding homes.'},
-  'Moody Family Park':{score:8.0,litter:8,bins:8,grass:8,benches:7,playground:8,graffiti:9,washrooms:null,date:'April 10, 2026',crowd:'Moderate',zone:'L7A',address:'40 Robert Parkinson Dr, Brampton, ON L7A',thoughts:'No washrooms. Well-maintained playground in a modern residential block. Highly modern and clean structures with excellent safety features. Open landscape naturally discourages antisocial behaviour.'},
-  'Lola Park':{score:7.7,litter:8,bins:7,grass:8,benches:7,playground:7,graffiti:9,washrooms:null,date:'April 15, 2026',crowd:'Low',zone:'L7A',address:'Brampton, ON L7A 0A8',thoughts:'No washrooms. Small community parkette near Mount Pleasant with a standard play area. Lacks specialized multi-use installations. Light litter accumulations on sunny weekend afternoons.'},
-  'Creditview Sandalwood Park':{score:8.3,litter:8,bins:8,grass:9,benches:8,playground:9,graffiti:8,washrooms:8,date:'April 17, 2026',crowd:'High',zone:'L6V',address:'10510 Creditview Rd, Brampton, ON L7A',thoughts:'State-of-the-art 100-acre destination site with fully AODA-accessible multi-sensory playground. Massive sports complex with multi-use courts, lacrosse boxes, cricket diamonds, and FIFA-approved turf. 3km walking trails and a natural wildlife pond.'},
-  'Worthington Park':{score:7.3,litter:7,bins:7,grass:8,benches:7,playground:7,graffiti:8,washrooms:null,date:'April 21, 2026',crowd:'Moderate',zone:'L6X',address:'75-89 Worthington Ave, Brampton, ON L7A 2A3',thoughts:'No washrooms. Traditional community park with a playground and open green space. Popular skate park and soccer field with steady traffic. Minor cosmetic wear on older play structures.'},
-  'Ahmadiyya Park':{score:8.0,litter:8,bins:8,grass:8,benches:7,playground:8,graffiti:9,washrooms:null,date:'April 25, 2026',crowd:'High',zone:'L6P',address:'340 Remembrance Rd, Brampton, ON',thoughts:'No washrooms. Active community splash pad draws local families. Green spaces cleanly edged and manicured. Open layout provides clear sightlines and an exceptionally low vandalism footprint.'},
-  'Angus Morrison Park':{score:7.8,litter:8,bins:7,grass:8,benches:7,playground:8,graffiti:9,washrooms:null,date:'April 28, 2026',crowd:'Low',zone:'L7A',address:'55 Aylesbury Dr, Brampton, ON L7A 0G2',thoughts:"No washrooms. Entry point for the scenic 4km Mount Pleasant Recreational Trail. Basic children's playground, well-kept but limited for older kids. Light windblown litter on busy weekends."},
-  'Burnt Elm Park':{score:8.0,litter:8,bins:8,grass:8,benches:7,playground:8,graffiti:9,washrooms:null,date:'April 30, 2026',crowd:'Moderate',zone:'L6V',address:'45 Burnt Elm Dr, Brampton, ON L7A 1T8',thoughts:'No washrooms. Active basketball court, shade shelter, and well-equipped playground across 4.9 acres. Mature greenery cleanly trimmed. High layout visibility naturally prevents graffiti.'},
-  'Fiddlers Parkette':{score:7.8,litter:8,bins:8,grass:8,benches:7,playground:7,graffiti:9,washrooms:null,date:'May 3, 2026',crowd:'Low',zone:'L7A',address:'13 Fiddlers Green Dr, Brampton, ON L7A 2S4',thoughts:'No washrooms. Minimalist green space as a passive walking link. Basic play area with safety cushion. Exceptionally clean turf due to small footprint and quick residential accessibility.'},
-  'Trincomalee Park':{score:8.0,litter:8,bins:8,grass:8,benches:7,playground:8,graffiti:9,washrooms:8,date:'May 6, 2026',crowd:'High',zone:'L6V',address:'60 Iguana Trail, Brampton, ON',thoughts:'Highly active municipal splash pad serving as a popular summer hub. Paved loop pathways are structurally sound. Home to a dedicated seniors club ensuring high community presence and clean facilities. Washrooms operational though minor cleaning needed after peak hours.'}
-};
+    const PLAN = [
+      ["01", "Define Scope", "Select diverse Brampton parks across neighbourhood, destination, high-traffic, and school-adjacent contexts.", "Complete"],
+      ["02", "Design Methodology", "Create a repeatable cleanliness score and document scoring criteria for consistency.", "Complete"],
+      ["03", "Collect Data", "Visit parks on weekdays and weekends, recording date, crowd level, scores, and observations.", "Complete"],
+      ["04", "Analyze Data", "Compare parks by score, postal zone, visitor traffic, and amenity conditions.", "Complete"],
+      ["05", "Generate Insights", "Develop evidence-based recommendations for maintenance and resource allocation.", "Complete"],
+      ["06", "Create Deliverables", "Build dashboard, report, presentation, and online portfolio materials.", "Complete"],
+      ["07", "Community Impact", "Share findings with City of Brampton Parks, councillors, and community associations.", "Active"],
+      ["08", "Measure Impact", "Track observations, stakeholder contacts, responses, and acknowledged recommendations.", "Upcoming"],
+      ["09", "Publish Work", "Publish datasets, dashboard, report, and presentation online.", "Upcoming"],
+      ["10", "Expand CiviqPulse", "Launch youth employment, food accessibility, and walkability projects.", "Upcoming"]
+    ];
 
-const ZONES={
-  L7A:{full:'L7A — Northwest Brampton',sub:'Mount Pleasant area',parks:['Tillacountry Park','Moody Family Park','Lola Park','Angus Morrison Park','Fiddlers Parkette']},
-  L6P:{full:'L6P — North Brampton',sub:'Sandalwood / Countryside',parks:['Ahmadiyya Park']},
-  L6R:{full:'L6R — Northwest Brampton',sub:'Springdale / Heart Lake',parks:[]},
-  L6S:{full:'L6S — Northeast Brampton',sub:'Bramalea North',parks:[]},
-  L6T:{full:'L6T — Bramalea East',sub:'East Brampton',parks:[]},
-  L6V:{full:'L6V — Central Brampton',sub:'Brampton East',parks:['Creditview Sandalwood Park','Burnt Elm Park','Trincomalee Park']},
-  L6W:{full:'L6W — Downtown Brampton',sub:'Central / Downtown',parks:[]},
-  L6X:{full:'L6X — West Central Brampton',sub:"Fletchers Creek / Spring Valley",parks:['Andrew McCandless Park','Worthington Park']},
-  L6Y:{full:'L6Y — South Brampton',sub:'Brampton South',parks:[]},
-  L6Z:{full:'L6Z — Southeast Brampton',sub:'Airport Road area',parks:[]}
-};
+    const state = {
+      parks: [],
+      filtered: [],
+      selectedZone: "all",
+      selectedPark: null,
+      selectedProject: "parks",
+      map: { scale: 1, x: 0, y: 0, dragging: false, startX: 0, startY: 0 }
+    };
 
-const CATS=['litter','bins','grass','benches','playground','graffiti','washrooms'];
-const CLAB={litter:'Litter on Ground',bins:'Garbage Bins',grass:'Grass & Landscaping',benches:'Benches & Seating',playground:'Playground & Play Areas',graffiti:'Graffiti & Vandalism',washrooms:'Washrooms & Water'};
+    const $ = (id) => document.getElementById(id);
 
-// Hover emboss via SVG CSS class toggling
-document.querySelectorAll('.z-path').forEach(path=>{
-  path.addEventListener('mouseenter',()=>{
-    if(!path.classList.contains('sel')) path.style.filter='drop-shadow(0 12px 28px rgba(0,0,0,.35)) brightness(1.12)';
-    path.style.transform='translateY(-4px) scale(1.018)';
-    path.style.transition='all .3s cubic-bezier(.34,1.56,.64,1)';
-  });
-  path.addEventListener('mouseleave',()=>{
-    if(!path.classList.contains('sel')){
-      path.style.filter='drop-shadow(0 2px 4px rgba(0,0,0,.15))';
-      path.style.transform='translateY(0) scale(1)';
+    function parseDataRows(text) {
+      const rows = [];
+      let row = [];
+      let value = "";
+      let quote = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const n = text[i + 1];
+        if (c === '"' && quote && n === '"') {
+          value += '"';
+          i++;
+        } else if (c === '"') {
+          quote = !quote;
+        } else if (c === "," && !quote) {
+          row.push(value);
+          value = "";
+        } else if ((c === "\n" || c === "\r") && !quote) {
+          if (c === "\r" && n === "\n") i++;
+          row.push(value);
+          if (row.some(cell => cell.trim() !== "")) rows.push(row);
+          row = [];
+          value = "";
+        } else {
+          value += c;
+        }
+      }
+      row.push(value);
+      if (row.some(cell => cell.trim() !== "")) rows.push(row);
+      const headers = rows.shift().map(h => h.trim());
+      return rows.map(cells => {
+        const entry = {};
+        headers.forEach((h, i) => entry[h] = (cells[i] || "").trim());
+        return entry;
+      });
     }
-  });
-});
 
-// Park dot label show/hide
-document.querySelectorAll('.p-dot').forEach(dot=>{
-  dot.addEventListener('mouseenter',()=>{
-    const lbg=dot.querySelector('.p-label-bg');
-    const ltxt=dot.querySelector('.p-label-txt');
-    if(lbg)lbg.setAttribute('opacity','1');
-    if(ltxt)ltxt.setAttribute('opacity','1');
-    dot.querySelector('.p-circle').setAttribute('r','7.5');
-  });
-  dot.addEventListener('mouseleave',()=>{
-    const lbg=dot.querySelector('.p-label-bg');
-    const ltxt=dot.querySelector('.p-label-txt');
-    if(lbg&&!dot.classList.contains('sel'))lbg.setAttribute('opacity','0');
-    if(ltxt&&!dot.classList.contains('sel'))ltxt.setAttribute('opacity','0');
-    if(!dot.classList.contains('sel'))dot.querySelector('.p-circle').setAttribute('r','5.5');
-  });
-});
+    function normal(value) {
+      return String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+    }
 
-function selectZone(zid){
-  document.querySelectorAll('.z-path').forEach(p=>{
-    p.classList.remove('sel');
-    p.style.filter='drop-shadow(0 2px 4px rgba(0,0,0,.15))';
-    p.style.transform='translateY(0) scale(1)';
-  });
-  const zp=document.getElementById('z-'+zid);
-  if(zp){
-    zp.classList.add('sel');
-    zp.style.filter='drop-shadow(0 12px 28px rgba(10,138,122,.5)) brightness(1.15)';
-    zp.style.transform='translateY(-5px) scale(1.022)';
-  }
-  const z=ZONES[zid];if(!z)return;
-  document.getElementById('mp-hint').style.display='none';
-  document.getElementById('mp-content').style.display='block';
-  document.getElementById('mp-zn').textContent=z.full;
-  document.getElementById('mp-zs').textContent=z.parks.length+' park'+(z.parks.length!==1?'s':'')+' surveyed';
-  const mp=document.getElementById('mp-parks');
-  mp.innerHTML='';
-  if(z.parks.length===0){mp.innerHTML='<div style="padding:1.5rem;text-align:center;font-size:12px;color:#637085">No parks surveyed in this zone yet.</div>';return;}
-  z.parks.forEach(pname=>{
-    const p=PARKS[pname];if(!p)return;
-    const col=p.score>=8?'#3aab3a':p.score>=7.5?'#f59e0b':'#ef4444';
-    const crC=p.crowd==='High'?'#3aab3a':p.crowd==='Moderate'?'#f59e0b':'#94a3b8';
-    const pct=p.score/10*100;
-    mp.innerHTML+=`<div class="pk-card" onclick="selectPark('${pname.replace(/'/g,"\\'")}')">
-      <div class="pk-ring"><svg width="42" height="42" viewBox="0 0 42 42"><circle cx="21" cy="21" r="17" fill="none" stroke="#f1f5f9" stroke-width="2.5"/><circle cx="21" cy="21" r="17" fill="none" stroke="${col}" stroke-width="2.5" stroke-dasharray="${2*Math.PI*17}" stroke-dashoffset="${2*Math.PI*17*(1-pct/100)}" stroke-linecap="round" transform="rotate(-90 21 21)"/></svg><div class="pk-rn" style="color:${col}">${p.score}</div></div>
-      <div class="pk-info">
-        <div class="pk-name">${pname}</div>
-        <div class="pk-meta"><span class="cr-dot" style="background:${crC}"></span>${p.crowd} crowd &nbsp;·&nbsp; ${p.date}</div>
-        <div style="font-size:10px;color:#94a3b8;margin-top:2px">${p.address}</div>
-      </div>
-    </div>`;
-  });
-}
+    function number(value) {
+      const parsed = Number.parseFloat(String(value || "").replace(/[^\d.]/g, ""));
+      return Number.isFinite(parsed) ? parsed : null;
+    }
 
-function selectPark(pname){
-  const p=PARKS[pname];if(!p)return;
-  selectZone(p.zone);
-  document.querySelectorAll('.pk-card').forEach(c=>c.classList.remove('sel'));
-  document.querySelectorAll('.pk-card').forEach(c=>{if(c.querySelector('.pk-name')&&c.querySelector('.pk-name').textContent===pname)c.classList.add('sel')});
-  const pdc=document.getElementById('pdc');
-  pdc.classList.add('show');
-  document.getElementById('pdc-park-name').textContent=pname;
-  const col=p.score>=8?'#5dc45d':p.score>=7.5?'#fbbf24':'#f87171';
-  const sb=document.getElementById('pdc-sco');sb.textContent=p.score;sb.style.color=col;
-  document.getElementById('pdc-kpis').innerHTML=`
-    <div class="kpi"><div class="kn" style="color:${col}">${p.score}</div><div class="kl">Final Score</div></div>
-    <div class="kpi"><div class="kn">${p.crowd}</div><div class="kl">Crowd Level</div></div>
-    <div class="kpi"><div class="kn">${p.washrooms!==null?p.washrooms:'N/A'}</div><div class="kl">Washrooms</div></div>
-    <div class="kpi"><div class="kn" style="font-size:11px;padding-top:4px">${p.date}</div><div class="kl">Date Visited</div></div>`;
-  let ch='';
-  CATS.forEach((cat,i)=>{
-    const v=p[cat];if(v===null)return;
-    const pct=(v/12.5)*100;
-    const c=v>=11?'#3aab3a':v>=9?'#0a8a7a':v>=7?'#f59e0b':'#ef4444';
-    ch+=`<div class="cr"><div class="cn">${CLAB[cat]}</div><div class="ct"><div class="cf" style="width:${pct}%;--d:${i*.07}s;background:${c}"></div></div><div class="cv" style="color:${c}">${v}</div></div>`;
-  });
-  document.getElementById('pdc-cats').innerHTML=ch;
-  document.getElementById('pdc-thoughts').textContent=p.thoughts;
-  // Address line
-  const tbody=document.getElementById('pdc-thoughts');
-  tbody.parentElement.innerHTML+=`<div style="font-size:11px;color:#94a3b8;margin-top:8px;display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${p.address}</div>`;
-  setTimeout(()=>pdc.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
-}
-function closePDC(){document.getElementById('pdc').classList.remove('show')}
+    function colorForScore(score) {
+      if (score >= 9) return getCss("--green");
+      if (score >= 8) return getCss("--teal");
+      return getCss("--amber");
+    }
 
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.nl').forEach(l=>l.classList.remove('on'));
-  document.getElementById('page-'+id).classList.add('on');
-  const e=document.getElementById('nl-'+id);if(e)e.classList.add('on');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+    function getCss(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
 
-const phases=[
-  {n:'01',t:'Define Scope',d:'Select 8 to 12 parks across Brampton including large, neighbourhood, high-traffic, and school-adjacent parks.',s:'done'},
-  {n:'02',t:'Design Methodology',d:'Create the Park Cleanliness Score (0 to 100) across 8 observable categories at 12.5 pts each.',s:'done'},
-  {n:'03',t:'Collect Data',d:'Visit each park on weekdays and weekends. Record park, date, crowd level, scores per category, and observations.',s:'done'},
-  {n:'04',t:'Analyze Data',d:'Compare parks by score. Identify patterns by size, traffic, timing, and bin availability. Build rankings and charts.',s:'done'},
-  {n:'05',t:'Generate Insights',d:'Develop evidence-based recommendations: add bins, increase weekend maintenance, improve signage.',s:'active'},
-  {n:'06',t:'Create Deliverables',d:'Build a dashboard, write a 5 to 10 page report, and prepare a 10 to 12 slide presentation.',s:'upcoming'},
-  {n:'07',t:'Community Outreach',d:'Share findings with Brampton Parks Dept., local councillors, and community associations.',s:'upcoming'},
-  {n:'08',t:'Measure Impact',d:'Track observations, stakeholders contacted, responses received, and recommendations acknowledged.',s:'upcoming'},
-  {n:'09',t:'Publish Work',d:'Publish the full dataset, dashboard, report, and presentation online.',s:'upcoming'},
-  {n:'10',t:'Expand CiviqPulse',d:'Launch Project 2: Youth Employment Dashboard. Then Food Accessibility, then Walkability Index.',s:'upcoming'}
-];
-const pl=document.getElementById('phase-list');
-phases.forEach(p=>{
-  const sc=p.s==='done'?'ph-done':p.s==='active'?'ph-active':'ph-up';
-  const bt=p.s==='done'?'pb-done':p.s==='active'?'pb-act':'pb-up';
-  const bl=p.s==='done'?'Complete':p.s==='active'?'In Progress':'Upcoming';
-  pl.innerHTML+=`<div class="phase ${sc}"><div class="ph-n">${p.n}</div><div style="flex:1"><div class="ph-t">${p.t}</div><div class="ph-d">${p.d}</div></div><div class="pb ${bt}">${bl}</div></div>`;
-});
+    function crowdColor(crowd) {
+      if (crowd === "High") return getCss("--red");
+      if (crowd === "Moderate") return getCss("--amber");
+      if (crowd === "Low") return getCss("--green");
+      return getCss("--muted");
+    }
 
-const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting)e.target.classList.add('vs')},{threshold:.1});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-</script>
+    function formatDate(value) {
+      if (!value) return "Not logged";
+      const date = new Date(value + "T00:00:00");
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    }
+
+    function cleanThoughts(text) {
+      return String(text || "")
+        .split(/\n|(?=\s*-\s)/)
+        .map(line => line.replace(/^\s*-\s*/, "").trim())
+        .filter(Boolean);
+    }
+
+    function lowestFactor(park) {
+      const values = FACTORS
+        .map(([key, label]) => ({ label, value: park[key] }))
+        .filter(item => item.value !== null);
+      values.sort((a, b) => a.value - b.value);
+      return values[0] || { label: "N/A", value: null };
+    }
+
+    function buildParks(ratings, checkins) {
+      const checkByPark = new Map();
+      checkins.forEach(row => {
+        const key = normal(row.Parks);
+        const current = checkByPark.get(key);
+        if (!current || String(row.Date) > String(current.Date)) checkByPark.set(key, row);
+      });
+
+      const byZoneIndex = {};
+      return ratings.map((row, index) => {
+        const zone = row["Zip Code"] || "Unknown";
+        byZoneIndex[zone] = byZoneIndex[zone] || 0;
+        const check = checkByPark.get(normal(row.Parks)) || {};
+        const score = number(row["Final Rating"]) || 0;
+        const park = {
+          id: `park-${index}`,
+          zone,
+          zoneName: ZONES[zone]?.name || zone,
+          name: row.Parks,
+          address: row.Address,
+          litter: number(row["Litter on Ground"]),
+          bins: number(row["Garbage Bins"]),
+          grass: number(row["Grass & Landscaping"]),
+          paths: number(row["Walking Paths"]),
+          benches: number(row["Benches & Seating Areas"]),
+          playground: number(row["Playground & Playareas"]),
+          graffiti: number(row["Graffiti & Vandalism"]),
+          washrooms: number(row["Washrooms"]),
+          score,
+          thoughts: cleanThoughts(row.Thoughts),
+          date: check.Date || "",
+          crowd: check["Crowd Level"] || "Not logged",
+          color: colorForScore(score)
+        };
+        const coords = placeInZone(zone, byZoneIndex[zone]++);
+        park.x = coords[0];
+        park.y = coords[1];
+        return park;
+      });
+    }
+
+    function placeInZone(zone, index) {
+      const config = ZONES[zone] || { center: [450, 310], radius: [260, 160] };
+      const angle = index * 2.3999632297;
+      const ring = Math.sqrt(index + 1) / Math.sqrt(13);
+      const jitter = 0.78 + ((index * 17) % 11) / 60;
+      const x = config.center[0] + Math.cos(angle) * config.radius[0] * ring * jitter;
+      const y = config.center[1] + Math.sin(angle) * config.radius[1] * ring * jitter;
+      return [Math.round(x), Math.round(y)];
+    }
+
+    async function loadData() {
+      try {
+        const [ratingsText, checkinsText] = await Promise.all([
+          fetch(PROJECT.ratingsCsv).then(response => {
+            if (!response.ok) throw new Error("Ratings data not found");
+            return response.text();
+          }),
+          fetch(PROJECT.checkinsCsv).then(response => {
+            if (!response.ok) throw new Error("Check-ins data not found");
+            return response.text();
+          })
+        ]);
+        const ratings = parseDataRows(ratingsText);
+        const checkins = parseDataRows(checkinsText);
+        state.parks = buildParks(ratings, checkins);
+        state.filtered = [...state.parks];
+        hydrate(checkins);
+      } catch (error) {
+        $("loadNotice").textContent = "Project data could not be loaded. Publish the folder with GitHub Pages or another static host so the browser can read the data files.";
+        $("loadNotice").classList.add("show");
+        $("panelSummary").textContent = "Project data could not be loaded.";
+      }
+    }
+
+    function hydrate(checkins) {
+      renderStats(checkins);
+      renderZoneControls();
+      renderPins();
+      renderList();
+      renderRankings();
+      renderTimeline();
+      bindEvents();
+      selectPark(state.parks.slice().sort((a, b) => b.score - a.score)[0]?.id, { center: false });
+      resetMap();
+    }
+
+    function renderStats(checkins) {
+      const zones = new Set(state.parks.map(p => p.zone));
+      const scores = state.parks.map(p => p.score).filter(Boolean);
+      const avg = scores.reduce((sum, value) => sum + value, 0) / scores.length;
+      const dates = checkins.map(c => c.Date).filter(Boolean).sort();
+      $("statParks").textContent = state.parks.length;
+      $("statZones").textContent = zones.size;
+      $("statAverage").textContent = avg.toFixed(2);
+      $("cardParkCount").textContent = `${state.parks.length} parks`;
+      $("evidenceDates").textContent = `${formatDate(dates[0])} to ${formatDate(dates[dates.length - 1])}`;
+      $("evidenceVisits").textContent = `${checkins.length} field check-ins capture visit dates so observations can be reviewed against the research timeline.`;
+      $("evidenceCoverage").textContent = `${zones.size} postal zones`;
+      $("evidenceCoverageText").textContent = `${state.parks.length} parks are scored across Brampton postal-code zones, giving the project city-wide comparison value.`;
+    }
+
+    function renderZoneControls() {
+      const zones = Array.from(new Set(state.parks.map(p => p.zone))).sort();
+      $("zoneStrip").innerHTML = `<button class="zone-chip active" data-zone="all">All</button>` + zones.map(z => `<button class="zone-chip" data-zone="${z}">${z}</button>`).join("");
+    }
+
+    function renderPins() {
+      $("pinLayer").innerHTML = state.parks.map(park => `
+        <button class="pin" id="pin-${park.id}" data-id="${park.id}" style="left:${park.x}px;top:${park.y}px;--pin-color:${park.color}" aria-label="${escapeHtml(park.name)}"></button>
+      `).join("");
+    }
+
+    function renderList() {
+      const parks = state.filtered.slice().sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+      $("panelTitle").textContent = state.selectedZone === "all" ? "All surveyed parks" : `${state.selectedZone} - ${ZONES[state.selectedZone]?.name || ""}`;
+      $("panelSummary").textContent = `${parks.length} parks shown from ${state.parks.length} total surveyed parks`;
+      $("parkList").innerHTML = parks.map(park => `
+        <button class="park-row ${state.selectedPark?.id === park.id ? "active" : ""}" data-id="${park.id}">
+          <span class="score-ring" style="--score:${park.score * 10};--score-color:${park.color}">${park.score.toFixed(1)}</span>
+          <span>
+            <span class="park-title">${escapeHtml(park.name)}</span>
+            <span class="park-sub">${park.zone} · ${escapeHtml(park.address)}</span>
+          </span>
+        </button>
+      `).join("");
+      updatePinVisibility();
+    }
+
+    function renderRankings() {
+      const parks = state.parks.slice().sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+      $("rankingBody").innerHTML = parks.map((park, index) => {
+        const low = lowestFactor(park);
+        return `
+          <tr>
+            <td><span class="ranking" style="--score-color:${park.color}">${index + 1}</span></td>
+            <td><strong>${escapeHtml(park.name)}</strong></td>
+            <td>${park.zone}</td>
+            <td><strong>${park.score.toFixed(1)}</strong></td>
+            <td>${formatDate(park.date)}</td>
+            <td>${escapeHtml(low.label)}${low.value === null ? "" : ` (${low.value})`}</td>
+            <td>${escapeHtml(park.address)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderTimeline() {
+      $("timeline").innerHTML = PLAN.map(([num, title, desc, status]) => {
+        const statusClass = status === "Complete" ? "done" : status === "Active" ? "active-status" : "next";
+        return `
+          <article class="phase">
+            <div class="phase-num">${num}</div>
+            <div><h3>${title}</h3><p>${desc}</p></div>
+            <span class="status ${statusClass}">${status}</span>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function bindEvents() {
+      $("ratingSelect").addEventListener("change", applyFilters);
+      document.querySelectorAll("[data-nav]").forEach(link => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          navigate(link.dataset.nav);
+        });
+      });
+      $("projectCards").addEventListener("click", (event) => {
+        const card = event.target.closest(".project-card");
+        if (card) setProject(card.dataset.project);
+      });
+      $("zoneStrip").addEventListener("click", (event) => {
+        const chip = event.target.closest(".zone-chip");
+        if (chip) setZone(chip.dataset.zone);
+      });
+      $("parkList").addEventListener("click", (event) => {
+        const row = event.target.closest(".park-row");
+        if (row) selectPark(row.dataset.id, { center: false, reset: true, popover: true });
+      });
+      $("pinLayer").addEventListener("click", (event) => {
+        const pin = event.target.closest(".pin");
+        if (pin) selectPark(pin.dataset.id, { center: false, popover: true });
+      });
+      $("pinLayer").addEventListener("mouseover", (event) => {
+        const pin = event.target.closest(".pin");
+        if (pin) showPopover(pin.dataset.id);
+      });
+      $("pinLayer").addEventListener("mouseout", (event) => {
+        if (event.target.closest(".pin")) $("popover").classList.remove("show");
+      });
+      document.querySelectorAll(".zone-shape").forEach(shape => {
+        shape.addEventListener("click", () => setZone(shape.dataset.zone));
+      });
+      $("zoomIn").addEventListener("click", () => zoom(1.16));
+      $("zoomOut").addEventListener("click", () => zoom(.86));
+      $("resetMap").addEventListener("click", resetMap);
+      setupPan();
+    }
+
+    function navigate(target) {
+      const plan = target === "plan";
+      const rankings = target === "rankings";
+      const about = target === "about";
+      $("researchView").hidden = plan || rankings || about;
+      $("plan").hidden = !plan;
+      $("rankings").hidden = !rankings;
+      $("about").hidden = !about;
+      document.querySelectorAll(".nav a").forEach(link => {
+        link.classList.toggle("active", link.dataset.nav === target);
+      });
+      if (plan) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      if (rankings) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      if (about) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      if (target === "overview") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      if (state.selectedProject !== "parks" && ["map", "evidence"].includes(target)) {
+        setProject("parks");
+      }
+      const section = $(target === "overview" ? "overview" : target);
+      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function setProject(project) {
+      state.selectedProject = project;
+      const meta = PROJECT_META[project] || PROJECT_META.parks;
+      document.querySelectorAll(".project-card").forEach(card => {
+        card.classList.toggle("active", card.dataset.project === project);
+      });
+      const isParks = project === "parks";
+      $("snapshot").hidden = !isParks;
+      $("parkDataView").hidden = !isParks;
+      $("projectPlaceholder").hidden = isParks;
+      if (!isParks) {
+        $("placeholderTitle").textContent = meta.title;
+        $("placeholderCopy").textContent = meta.copy;
+        $("projectPlaceholder").scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        $("snapshotTitle").textContent = meta.title;
+        $("snapshotCopy").textContent = meta.copy;
+        $("snapshot").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function setZone(zone) {
+      state.selectedZone = zone;
+      document.querySelectorAll(".zone-chip").forEach(chip => chip.classList.toggle("active", chip.dataset.zone === zone));
+      document.querySelectorAll(".zone-shape").forEach(shape => shape.classList.toggle("selected", shape.dataset.zone === zone));
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const rating = $("ratingSelect").value;
+      state.filtered = state.parks.filter(park => {
+        const zoneOk = state.selectedZone === "all" || park.zone === state.selectedZone;
+        const ratingOk =
+          rating === "all" ||
+          (rating === "excellent" && park.score >= 9) ||
+          (rating === "strong" && park.score >= 8 && park.score < 9) ||
+          (rating === "watch" && park.score < 8);
+        return zoneOk && ratingOk;
+      });
+      renderList();
+    }
+
+    function updatePinVisibility() {
+      const visible = new Set(state.filtered.map(p => p.id));
+      document.querySelectorAll(".pin").forEach(pin => {
+        pin.classList.toggle("hidden", !visible.has(pin.dataset.id));
+        pin.classList.toggle("selected", state.selectedPark?.id === pin.dataset.id);
+      });
+    }
+
+    function selectPark(id, options = {}) {
+      const park = state.parks.find(item => item.id === id);
+      if (!park) return;
+      state.selectedPark = park;
+      $("detailName").textContent = park.name;
+      $("detailAddress").textContent = park.address;
+      $("detailScore").style.setProperty("--score-color", park.color);
+      $("detailScore").querySelector("strong").textContent = park.score.toFixed(1);
+      $("detailZone").textContent = park.zone;
+      const low = lowestFactor(park);
+      $("detailLowest").textContent = low.value === null ? low.label : `${low.label} (${low.value})`;
+      $("detailDate").textContent = formatDate(park.date);
+      $("factorBars").innerHTML = FACTORS.map(([key, label]) => {
+        const value = park[key];
+        const display = value === null ? "N/A" : value;
+        const width = value === null ? 0 : Math.max(4, Math.min(100, value * 10));
+        const color = value === null ? getCss("--muted") : colorForScore(value);
+        return `
+          <div class="bar-row">
+            <div class="bar-label">${label}</div>
+            <div class="bar-track"><div class="bar-fill" style="--bar-width:${width}%;--bar-color:${color}"></div></div>
+            <div class="bar-value">${display}</div>
+          </div>
+        `;
+      }).join("");
+      $("thoughtList").innerHTML = (park.thoughts.length ? park.thoughts : ["No notes provided."]).map(line => `<li>${escapeHtml(line)}</li>`).join("");
+      renderList();
+      updatePinVisibility();
+      if (options.reset) resetMap();
+      if (options.center !== false) centerOnPark(park);
+      if (options.popover) showPopover(park.id);
+    }
+
+    function showPopover(id) {
+      const park = state.parks.find(item => item.id === id);
+      if (!park) return;
+      const pop = $("popover");
+      const low = lowestFactor(park);
+      const lowest = low.value === null ? low.label : `${low.label} (${low.value})`;
+      pop.innerHTML = `
+        <div class="popover-top">
+          <span class="score-ring popover-score" style="--score:${park.score * 10};--score-color:${park.color}">${park.score.toFixed(1)}</span>
+          <div>
+            <h3>${escapeHtml(park.name)} (${park.zone})</h3>
+          </div>
+        </div>
+        <div class="popover-factor"><span>Lowest factor</span><strong>${escapeHtml(lowest)}</strong></div>
+        <p>${escapeHtml(park.address)}</p>
+      `;
+      const point = mapPointToScreen(park.x, park.y);
+      const shell = $("mapShell").getBoundingClientRect();
+      const popWidth = Math.min(320, Math.max(220, shell.width - 30));
+      const popHeight = pop.offsetHeight || 160;
+      const left = Math.max(popWidth / 2 + 8, Math.min(shell.width - popWidth / 2 - 8, point.x));
+      const top = Math.max(popHeight + 28, point.y);
+      pop.style.left = `${left}px`;
+      pop.style.top = `${top}px`;
+      pop.classList.add("show");
+    }
+
+    function mapPointToScreen(x, y) {
+      const shell = $("mapShell").getBoundingClientRect();
+      const layerW = 900;
+      const layerH = 620;
+      const baseX = shell.width / 2 - layerW / 2;
+      const baseY = shell.height / 2 - layerH / 2;
+      return {
+        x: state.map.x + (baseX + x) * state.map.scale,
+        y: state.map.y + (baseY + y) * state.map.scale
+      };
+    }
+
+    function centerOnPark(park) {
+      if (window.matchMedia("(max-width: 1100px)").matches) return;
+      const shell = $("mapShell").getBoundingClientRect();
+      const layerW = 900;
+      const layerH = 620;
+      const baseX = shell.width / 2 - layerW / 2;
+      const baseY = shell.height / 2 - layerH / 2;
+      state.map.scale = Math.max(state.map.scale, 1);
+      state.map.x = shell.width / 2 - (baseX + park.x) * state.map.scale;
+      state.map.y = shell.height / 2 - (baseY + park.y) * state.map.scale;
+      applyMapTransform();
+    }
+
+    function zoom(factor) {
+      state.map.scale = Math.max(.72, Math.min(2.4, state.map.scale * factor));
+      applyMapTransform();
+    }
+
+    function resetMap() {
+      state.map.scale = 1;
+      state.map.x = 0;
+      state.map.y = 0;
+      applyMapTransform();
+    }
+
+    function applyMapTransform() {
+      $("mapStage").style.transform = `translate(${state.map.x}px, ${state.map.y}px) scale(${state.map.scale})`;
+      $("popover").classList.remove("show");
+    }
+
+    function setupPan() {
+      const shell = $("mapShell");
+      shell.addEventListener("pointerdown", (event) => {
+        if (event.target.closest("button")) return;
+        state.map.dragging = true;
+        state.map.startX = event.clientX - state.map.x;
+        state.map.startY = event.clientY - state.map.y;
+        shell.setPointerCapture(event.pointerId);
+      });
+      shell.addEventListener("pointermove", (event) => {
+        if (!state.map.dragging) return;
+        state.map.x = event.clientX - state.map.startX;
+        state.map.y = event.clientY - state.map.startY;
+        applyMapTransform();
+      });
+      shell.addEventListener("pointerup", () => state.map.dragging = false);
+      shell.addEventListener("pointercancel", () => state.map.dragging = false);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[char]);
+    }
+
+    loadData();
+  </script>
 </body>
 </html>
