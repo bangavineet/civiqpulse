@@ -1923,12 +1923,13 @@
 
     async function loadData() {
       try {
+        const dataUrl = path => `${path}${path.includes("?") ? "&" : "?"}v=${Date.now()}`;
         const [ratingsText, checkinsText] = await Promise.all([
-          fetch(PROJECT.ratingsCsv).then(response => {
+          fetch(dataUrl(PROJECT.ratingsCsv), { cache: "no-store" }).then(response => {
             if (!response.ok) throw new Error("Ratings data not found");
             return response.text();
           }),
-          fetch(PROJECT.checkinsCsv).then(response => {
+          fetch(dataUrl(PROJECT.checkinsCsv), { cache: "no-store" }).then(response => {
             if (!response.ok) throw new Error("Check-ins data not found");
             return response.text();
           })
